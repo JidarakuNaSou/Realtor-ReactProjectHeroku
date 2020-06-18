@@ -1,0 +1,70 @@
+.infoproperty {
+  height: 500px;
+}
+textarea {
+  margin-top: 50px;
+  outline: none;
+  color: #243762;
+  border-radius: 9px;
+  font-weight: bold;
+  border-color: af9cda;
+}
+
+.infoarea {
+  margin-left: 50px;
+  background-color: #fff;
+  border-width: 2px;
+  border-style: bold;
+  border-color: #af9cda;
+}
+.Property {
+  .user {
+    margin-top: 120px;
+    margin-left: 20px;
+    margin-right: 0px;
+    img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+  .carousel-inner {
+    margin-top: 55px;
+    height: 230px;
+    img {
+      background-color: #af9cda;
+      padding: 20px;
+    }
+  }
+  .video,
+  .model3D {
+    height: 300px;
+  }
+  .sketchfab-embed-wrapper {
+    margin: auto;
+  }
+  .model3D {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+  }
+
+  .carousel-item {
+    img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      object-position: 50% 50%;
+      margin-left: 65px;
+    }
+  }
+  .carousel-control-next-icon {
+    margin-top: 10px;
+    background-color: #af9cda;
+  }
+  .carousel-control-prev-icon {
+    margin-top: 10px;
+    background-color: #af9cda;
+  }
+}
