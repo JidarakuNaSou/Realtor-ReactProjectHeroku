@@ -30,10 +30,10 @@ export async function uploadProperty(formData) {
     });
 }
 
-export async function getPropertys() {
-  return axios.get("/getProperty").then(res => {
+export async function getPropertys(typeProperty) {
+  return axios.get(`/getProperty?propertyType=${typeProperty}`).then(res => {
     if (res.data !== undefined) {
-      return res.data;
+      return res.data; 
     }
   });
 }

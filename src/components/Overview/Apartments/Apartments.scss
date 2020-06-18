@@ -1,3 +1,5 @@
+$spanimage: 40;
+
 a {
   &:hover {
     text-decoration: none;
@@ -13,7 +15,7 @@ a {
   font-style: normal;
   font-size: 32px;
   line-height: 54px;
-  color:#af9cda;
+  color: #af9cda;
 }
 span[data-descr] {
   display: flex;
@@ -25,7 +27,7 @@ span[data-descr]:hover::after {
   content: attr(data-descr);
   position: absolute;
   left: 33%;
-  top: 19%;
+  top: 70px;
   border-radius: 49%;
   background-color: rgba(0, 0, 0, 0.4);
   background-image: url(/img/load_1.png);
@@ -40,7 +42,6 @@ span[data-descr]:hover::after {
   margin-top: 15px;
   margin-bottom: 15px;
   width: 230px;
-  height: 360px;
   border: none;
   .main_img {
     margin-top: 20px;
@@ -50,14 +51,7 @@ span[data-descr]:hover::after {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-  object-position: 50% 50%;
-  &__coap{
-
-  }
-  
-  &__space{
-    
-  }
+    object-position: 50% 50%;
   }
   &-body {
     width: 150px;
@@ -78,7 +72,11 @@ span[data-descr]:hover::after {
     color: #243762;
     margin-top: 8px;
   }
-  &__title,&__space,&__coap,&__street,&__place {
+  &__title,
+  &__space,
+  &__coap,
+  &__street,
+  &__place {
     margin-top: 10px;
     font-family: Roboto;
     font-style: normal;
@@ -87,39 +85,60 @@ span[data-descr]:hover::after {
     line-height: 19px;
     color: #243762;
   }
-  &__street{
+  &__street {
     margin-top: 20px;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
-    }
-  &__place{
+  }
+  &__place {
     margin-top: 20px;
     font-size: 18px;
     color: #af9cda;
     font-weight: bold;
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
+    &__tag {
+      margin-top: 5px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 14px;
+      color: #243762;
+    }
+    .tag {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 9px;
+      line-height: 10px;
+      padding: 3px 0px;
+
+      color: #243762;
+      background-color: #e6eeff;
+
+      margin: 5px 5px;
+    }
   }
+}
 
-  &__tag {
-    margin-top: 5px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 14px;
-    color: #243762;
+.apartments{
+  input {
+    border: 2px solid;
+    border-radius: 9px;
+    border-color: #af9cda;
   }
-  .tag {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 9px;
-    line-height: 10px;
-    padding: 3px 0px;
-
-    color: #243762;
-    background-color: #e6eeff;
-
-    margin: 5px 5px;
+  hr{
+    border: none; 
+    background-color: #af9cda; 
+    color: #af9cda; 
+    height: 1px;
   }
 }

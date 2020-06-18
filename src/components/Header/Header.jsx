@@ -1,32 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 import SignUserTogglerContainer from "./SignUserToggler/SignUserTogglerContainer";
 
 export default function Header(props) {
-
-  useEffect(() => {
-    window.gapi.load("auth2", () => {
-      window.gapi.auth2
-        .init({
-          client_id:
-            "1054236151850-g3o9e7paoi2novftkh56056jtrlnehkr.apps.googleusercontent.com"
-        })
-        .then(googleAuth => {
-          console.log(googleAuth.isSignedIn.get());
-          if (googleAuth.isSignedIn.get()) {
-            const googleUser = googleAuth.currentUser.get();
-            const profile = googleUser.getBasicProfile();
-            props.setUserData(
-              profile.getFamilyName(),
-              profile.getGivenName(),
-              profile.getImageUrl()
-            );
-            props.setUser("user", true);
-          }
-        });
-    });
-  });
   return (
     <header className="header row">
       <div className="header_logo col col-sm-2 " >

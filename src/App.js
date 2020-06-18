@@ -4,9 +4,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import HomeContent from "./components/HomeContent/HomeContent";
 import LoginContainer from "./components/Auth/Login/LoginContainer";
-import Etc from "./components/Overview/Etc/Etc";
-import House from "./components/Overview/House/House";
-import Office from "./components/Overview/Office/Office";
+import EtcContainer from "./components/Overview/Etc/EtcContainer";
+import HouseContainer from "./components/Overview/House/HouseContainer";
+import OfficeContainer from "./components/Overview/Office/OfficeContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import ApartmentsContainer from "./components/Overview/Apartments/ApartmentsContainer";
 import PropertyContainer from "./components/Overview/Property/PropertyContainer";
@@ -24,9 +24,9 @@ class App extends React.Component {
             <Route exact path="/" component={HomeContent} />
             <Route exact path="/Login" component={LoginContainer} />
             <Route exact path="/Apartments" component={ApartmentsContainer} />
-            <Route exact path="/Etc" component={Etc} />
-            <Route exact path="/House" component={House} />
-            <Route exact path="/Office" component={Office} />
+            <Route exact path="/Etc" component={EtcContainer} />
+            <Route exact path="/House" component={HouseContainer} />
+            <Route exact path="/Office" component={OfficeContainer} />
             <Route exact path="/Profile" component={ProfileContainer} />
             <Route exact path="/Property" component={PropertyContainer} />
             <Route exact path="/InsertProperty" component={InsertPropertyContainer} />
