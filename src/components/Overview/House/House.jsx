@@ -45,8 +45,8 @@ class House extends React.Component {
 
   componentDidMount() {
     getPropertys("Дом").then((res) => {
+      console.log(res);
       this.setState({ Propertys: res, filterlist: res });
-      console.log(this.state.filterlist);
     });
   }
 
