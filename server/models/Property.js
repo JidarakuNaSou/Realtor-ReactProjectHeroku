@@ -14,9 +14,6 @@ const PropertySchema = new Schema({
   Apartaments: {
     type: String,
   },
-  fulladdres: {
-    type: String,
-  },
   countApartment: {
     type: String,
   },
@@ -41,7 +38,7 @@ const PropertySchema = new Schema({
   phone: {
     type: String,
   },
-  sketch3D: {
+  sketch3D:{
     type: String,
   },
   uploadedFile: {
