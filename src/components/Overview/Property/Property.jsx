@@ -133,7 +133,16 @@ class Property extends React.Component {
               </div>
             </div>
             <div className="col-1"></div>
-            <div className="col-7 video shadow"></div>
+            <div className="col-7 video shadow">
+              <iframe
+                width="560"
+                height="250"
+                src={this.props.property.video}
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>

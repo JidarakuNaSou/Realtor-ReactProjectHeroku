@@ -44,6 +44,9 @@ const PropertySchema = new Schema({
   sketch3D: {
     type: String,
   },
+  video: {
+    type: String,
+  },
   uploadedFile: {
     type: Object,
   },

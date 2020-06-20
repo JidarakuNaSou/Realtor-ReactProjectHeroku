@@ -74,6 +74,7 @@ app.post(
       img_url: req.body.img_url,
       phone: req.body.phone,
       sketch3D: req.body.sketch3D,
+      video: req.body.video,
       uploadedFile: req.files,
       created: today,
     };
@@ -84,25 +85,29 @@ app.post(
 );
 
 app.get("/getProperty", (req, res) => {
-  if (req.query.propertyType == "Прочее"){
-    Property.find({ typeProperty: {$in :["Торговое помещение","Складское помещение","Готовый бизнес"]} }).then((resdata) => {
+  if (req.query.propertyType == "Прочее") {
+    Property.find({
+      typeProperty: {
+        $in: ["Торговое помещение", "Складское помещение", "Готовый бизнес"],
+      },
+    }).then((resdata) => {
       if (resdata) {
         console.log(resdata);
         return res.send(resdata);
       } else return console.log("there is no such user ");
     });
-  }
-  else if (req.query.propertyType == "Офис"){
+  } else if (req.query.propertyType == "Офис") {
     Property.find({ typeProperty: "Офисное помещение" }).then((resdata) => {
       if (resdata) {
         console.log(resdata);
         return res.send(resdata);
       } else return console.log("there is no such user ");
     });
-  }
-  else if (req.query.propertyType == "Дом") {
-    Property.find({ typeProperty: {$in :["Дом","Часть Дома","Таунхаус","Дуплекс"]} }).then((resdata) => {
-      if (resdata) { 
+  } else if (req.query.propertyType == "Дом") {
+    Property.find({
+      typeProperty: { $in: ["Дом", "Часть Дома", "Таунхаус", "Дуплекс"] },
+    }).then((resdata) => {
+      if (resdata) {
         console.log(resdata);
         return res.send(resdata);
       } else return console.log("there is no such user ");

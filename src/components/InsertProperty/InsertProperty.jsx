@@ -9,20 +9,39 @@ export default function InsertProperty(props) {
   const [uploadedFile, setUploadedFile] = useState();
   const [mainPhoto, setMainPhoto] = useState();
   const { register, handleSubmit } = useForm();
-  const [pathFile, setPathFile] = useState("");
+  const [pathFile, setPathFile] = useState();
   const [sketch3D, setSketch3D] = useState(null);
   const [video, setVideo] = useState(null);
   const [typeProperty, setTypeProperty] = useState("Выбрать");
   const [countApartment, setCountApartment] = useState();
 
   const handleOnDrop = (files, rejectedFiles) => {
-    setUploadedFile(files);
-    let pathfiles = [];
-    for (var i = 0, f; (f = files[i]); i++) {
-      pathfiles.push(URL.createObjectURL(f));
+    if (!uploadedFile) {
+      setUploadedFile(files);
+      let pathfiles = [];
+      for (var i = 0, f; (f = files[i]); i++) {
+        pathfiles.push(URL.createObjectURL(f));
+      }
+      pathfiles.push("img/Group3.png");
+      setPathFile(pathfiles);
+      setMainPhoto(pathfiles[0]);
+    } else {
+      let updateFiles = uploadedFile;
+      for (var i = 0, f; (f = files[i]); i++) {
+        updateFiles.push(f);
+      }
+
+      setUploadedFile(updateFiles);
+      console.log(`пути файлов ${pathFile}`);
+      let pathfiles = pathFile;
+      pathfiles.splice(pathfiles.length - 1, 1);
+      for (var i = 0, f; (f = files[i]); i++) {
+        pathfiles.push(URL.createObjectURL(f));
+      }
+      pathfiles.push("img/Group3.png");
+      setPathFile(null);
+      setPathFile(pathfiles);
     }
-    setPathFile(pathfiles);
-    setMainPhoto(pathfiles[0]);
   };
   const handleClose3D = () => {
     props.setShowModal3D(false);
@@ -31,17 +50,40 @@ export default function InsertProperty(props) {
   const handleSave3D = () => {
     props.setShowModal3D(false);
   };
+  const handleSaveVideo = () => {
+    props.setShowModalVideo(false);
+  };
   const handleShow3D = () => props.setShowModal3D(true);
 
-  const handleCloseVideo = () => props.setShowModalVideo(false);
+  const handleCloseVideo = () => {
+    props.setShowModalVideo(false);
+    setVideo(null);
+  };
   const handleShowVideo = () => props.setShowModalVideo(true);
 
   const onSubmit = (data, event) => {
     event.preventDefault();
 
+    if (!uploadedFile) {
+      alert("Загрузите фото");
+      return;
+    }
+    if (typeProperty === "Выбрать") {
+      alert("Выберите тип недвижимости");
+      return;
+    }
+
     const formData = new FormData();
-    for (let i = 0; i < uploadedFile.length; i++) {
-      formData.append("files[]", uploadedFile[i]);
+    const updateFilesArray = uploadedFile;
+    for (let i = 0; i < pathFile.length; i++) {
+      if (pathFile[i] === mainPhoto) {
+        let revers = uploadedFile[0];
+        updateFilesArray[0] = updateFilesArray[i];
+        updateFilesArray[i] = revers;
+      }
+    }
+    for (let i = 0; i < updateFilesArray.length; i++) {
+      formData.append("files[]", updateFilesArray[i]);
     }
 
     formData.append("typeProperty", typeProperty);
@@ -57,10 +99,10 @@ export default function InsertProperty(props) {
     formData.append("first_name", props.first_name);
     formData.append("img_url", props.img_url);
     formData.append("sketch3D", sketch3D);
-    console.log(data);
-    console.log(typeProperty);
-    console.log(countApartment);
+    formData.append("video", video);
     uploadProperty(formData);
+    console.log("Новая запись");
+    alert("Недвижимость выставлена!");
   };
 
   const handleTypeProperty = (e) => {
@@ -71,13 +113,35 @@ export default function InsertProperty(props) {
   };
 
   const onChange3D = (e) => {
-    setSketch3D(e.target.value);
+    setSketch3D(`${e.target.value}/embed`);
   };
   const onChangeVideo = (e) => {
-    setVideo(e.target.value);
+    setVideo(`https://www.youtube.com/embed/${e.target.value.slice(32)}`);
+   
   };
   const handleMainPhoto = (photo) => {
     setMainPhoto(photo);
+  };
+  const deletePhoto = (photo) => {
+    const updateFiles = uploadedFile;
+    const pathfiles = pathFile;
+    console.log("прошел тут");
+    for (var i = pathfiles.length - 1; i >= 0; i--) {
+      if (pathfiles[i] == photo) {
+        pathfiles.splice(i, 1);
+        updateFiles.splice(i, 1);
+      }
+    }
+
+    if (mainPhoto === photo) setMainPhoto(pathfiles[0]);
+
+    if (pathfiles.length === 1) {
+      setPathFile(undefined);
+      setUploadedFile(undefined);
+    } else {
+      setPathFile(pathfiles);
+      setUploadedFile(updateFiles);
+    }
   };
 
   return (
@@ -190,7 +254,7 @@ export default function InsertProperty(props) {
                         id="radio-13"
                         type="radio"
                         name="radio2"
-                        value="radio2"
+                        value="Складское помещение"
                         onChange={handleTypeProperty}
                       />
                       <label for="radio-13">Складское помещение</label>
@@ -230,72 +294,83 @@ export default function InsertProperty(props) {
                 ref={register}
                 placeholder="НОМЕР ДОМА"
               />
-              <input
-                type="text"
-                className="col-2"
-                name="Apartaments"
-                ref={register}
-                placeholder="КВАРТИРА"
-              />
+              {typeProperty === "Квартира" ? (
+                <input
+                  type="text"
+                  className="col-2"
+                  name="Apartaments"
+                  ref={register}
+                  placeholder="КВАРТИРА"
+                />
+              ) : null}
             </div>
+            {typeProperty === "Квартира" ||
+            typeProperty === "Дом" ||
+            typeProperty === "Часть Дома" ||
+            typeProperty === "Таунхаус" ||
+            typeProperty === "Дуплекс" ? (
+              <>
+                <div className="col-12">
+                  <label>Количество комнат</label>
+                </div>
+                <div className="col-12">
+                  {typeProperty === "Квартира" ? (
+                    <div class="form_radio_btn">
+                      <input
+                        id="radio-1"
+                        type="radio"
+                        name="radio"
+                        onChange={handleCountApartment}
+                        value="Студия"
+                      />
+                      <label for="radio-1">Студия</label>
+                    </div>
+                  ) : null}
 
-            <div className="col-12">
-              <label>Количество комнат</label>
-            </div>
-            <div className="col-12">
-              <div class="form_radio_btn">
-                <input
-                  id="radio-1"
-                  type="radio"
-                  name="radio"
-                  onChange={handleCountApartment}
-                  value="Студия"
-                />
-                <label for="radio-1">Студия</label>
-              </div>
+                  <div class="form_radio_btn">
+                    <input
+                      id="radio-2"
+                      type="radio"
+                      name="radio"
+                      onChange={handleCountApartment}
+                      value="1"
+                    />
+                    <label for="radio-2">1</label>
+                  </div>
 
-              <div class="form_radio_btn">
-                <input
-                  id="radio-2"
-                  type="radio"
-                  name="radio"
-                  onChange={handleCountApartment}
-                  value="1"
-                />
-                <label for="radio-2">1</label>
-              </div>
-
-              <div class="form_radio_btn">
-                <input
-                  id="radio-3"
-                  type="radio"
-                  name="radio"
-                  onChange={handleCountApartment}
-                  value="2"
-                />
-                <label for="radio-3">2</label>
-              </div>
-              <div class="form_radio_btn">
-                <input
-                  id="radio-4"
-                  type="radio"
-                  name="radio"
-                  onChange={handleCountApartment}
-                  value="3"
-                />
-                <label for="radio-4">3</label>
-              </div>
-              <div class="form_radio_btn">
-                <input
-                  id="radio-5"
-                  type="radio"
-                  name="radio"
-                  onChange={handleCountApartment}
-                  value="4"
-                />
-                <label for="radio-5">4+</label>
-              </div>
-            </div>
+                  <div class="form_radio_btn">
+                    <input
+                      id="radio-3"
+                      type="radio"
+                      name="radio"
+                      onChange={handleCountApartment}
+                      value="2"
+                    />
+                    <label for="radio-3">2</label>
+                  </div>
+                  <div class="form_radio_btn">
+                    <input
+                      id="radio-4"
+                      type="radio"
+                      name="radio"
+                      onChange={handleCountApartment}
+                      value="3"
+                    />
+                    <label for="radio-4">3</label>
+                  </div>
+                  <div class="form_radio_btn">
+                    <input
+                      id="radio-5"
+                      type="radio"
+                      name="radio"
+                      onChange={handleCountApartment}
+                      value="4"
+                    />
+                    <label for="radio-5">4+</label>
+                  </div>
+                </div>
+              </>
+            ) : null}
 
             <div className="col-12 Sap">
               <label className="col-6">Площадь</label>
@@ -320,14 +395,12 @@ export default function InsertProperty(props) {
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-12 mt-5">
               <label>Описание</label>
-            </div>
-            <div className="col-12">
               <textarea
                 name="Title"
                 id=""
-                cols="80"
+                cols="70"
                 rows="15"
                 ref={register}
               ></textarea>
@@ -349,7 +422,7 @@ export default function InsertProperty(props) {
                       <div className="upmessage">
                         Нажмите, что бы загрузить фотографии
                       </div>
-                      <button className=""></button>
+                      <button type="button" className=""></button>
                     </div>
                   </span>
                 </div>
@@ -360,7 +433,7 @@ export default function InsertProperty(props) {
               <span className="d-flex">
                 <div className="col-12 d-flex mainimage justify-content-center align-items-center">
                   <span data-delete="">
-                    <button>
+                    <button type="button">
                       <img src={mainPhoto} class="d-block " alt="Природа"></img>
                     </button>
                   </span>
@@ -373,27 +446,115 @@ export default function InsertProperty(props) {
                   data-ride="carousel"
                 >
                   <div class="carousel-inner">
-                    <div class="carousel-item active ">
-                      <div className="row">
-                        {pathFile.map((pathFile, index) => {
-                          return (
-                            <div className="item" key={index}>
-                              <span data-delete="">
-                                <button
-                                  onClick={() => handleMainPhoto(pathFile)}
-                                >
-                                  <img
-                                    src={pathFile}
-                                    class="d-block "
-                                    alt="Природа"
-                                  ></img>
-                                </button>
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    {pathFile.map((item, index) => {
+                      return index === 0 ? (
+                        <div class="carousel-item active ">
+                          <div className="row">
+                            {pathFile.map((pathFile, index1, pathFileArray) => {
+                              return index1 < 4 ? (
+                                index1 !== pathFileArray.length - 1 ? (
+                                  <div className="item" key={index1}>
+                                    <button
+                                      className="delbtn"
+                                      type="button"
+                                      onClick={() => deletePhoto(pathFile)}
+                                    ></button>
+                                    <div className="col-12"></div>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleMainPhoto(pathFile)}
+                                    >
+                                      <img
+                                        src={pathFile}
+                                        class="d-block "
+                                        alt="Природа"
+                                      ></img>
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <Dropzone
+                                    maxFiles="4"
+                                    onDrop={handleOnDrop}
+                                    maxSize="100000"
+                                    accept=".jpg,.png,.jpeg"
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div
+                                        className="item updatephoto"
+                                        key={index1}
+                                        {...getRootProps()}
+                                      >
+                                        <input {...getInputProps()} />
+                                        <button type="button">
+                                          <img
+                                            src={pathFile}
+                                            class="d-block "
+                                            alt="Природа"
+                                          ></img>
+                                        </button>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                )
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      ) : index % 4 === 0 ? (
+                        <div class="carousel-item ">
+                          <div className="row">
+                            {pathFile.map((pathFile, index2, pathFileArray) => {
+                              return index2 >= index && index2 < index + 4 ? (
+                                index2 !== pathFileArray.length - 1 ? (
+                                  <div className="item" key={index2}>
+                                    <button
+                                      className="delbtn"
+                                      onClick={() => deletePhoto(pathFile)}
+                                      type="button"
+                                    ></button>
+
+                                    <button
+                                      onClick={() => handleMainPhoto(pathFile)}
+                                      type="button"
+                                    >
+                                      <img
+                                        src={pathFile}
+                                        class="d-block "
+                                        alt="Природа"
+                                      ></img>
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <Dropzone
+                                    maxFiles="4"
+                                    onDrop={handleOnDrop}
+                                    maxSize="100000"
+                                    accept=".jpg,.png,.jpeg"
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div
+                                        className="item updatephoto"
+                                        key={index2}
+                                        {...getRootProps()}
+                                      >
+                                        <input {...getInputProps()} />
+                                        <button type="button">
+                                          <img
+                                            src={pathFile}
+                                            class="d-block "
+                                            alt="Природа"
+                                          ></img>
+                                        </button>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                )
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      ) : null;
+                    })}
                   </div>
                 </div>
                 <a
@@ -449,14 +610,23 @@ export default function InsertProperty(props) {
 
           <div className="col-1"></div>
           <div className="col-7 shadow uplvideo d-flex justify-content-center align-items-center">
-            {props.showModalVideo == false ? (
+            {props.showModalVideo == false && video == null ? (
               <button
                 onClick={handleShowVideo}
                 className="header__btn videobtn"
               >
                 Загрузить Видео
               </button>
-            ) : null}
+            ) : (
+              <iframe
+                width="560"
+                height="250"
+                src={video}
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen="true"
+              ></iframe>
+            )}
           </div>
         </div>
         <div className="row Insertform d-flex justify-content-center">
@@ -504,7 +674,7 @@ export default function InsertProperty(props) {
                 placeholder="Введите ссылку на видео"
                 ref={register}
               />
-              <button>Сохранить</button>
+              <button onClick={handleSaveVideo}>Сохранить</button>
             </div>
           </div>
         </div>
