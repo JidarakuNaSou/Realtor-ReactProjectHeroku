@@ -37,27 +37,9 @@ const Users = require("./routers/Users");
 app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
-aws.config.region="eu-north-1";
-
-const s3 = new aws.S3()
-
-/* const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.S3_BUCKET,
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
-  })
-}) */
-
 app.post(
   "/upload-property",
-  /* upload */multer.array("files[]", 10),
+  multer().array("files[]", 10),
   (req, res) => {
     if (req.body === null && req.files === null) {
       return res.status(400).json({ msg: "No file uploaded" });
