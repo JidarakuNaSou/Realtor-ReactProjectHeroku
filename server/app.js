@@ -41,7 +41,7 @@ aws.config.region="eu-north-1";
 
 const s3 = new aws.S3()
 
-const upload = multer({
+/* const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.S3_BUCKET,
@@ -53,11 +53,11 @@ const upload = multer({
       cb(null, Date.now().toString())
     }
   })
-})
+}) */
 
 app.post(
   "/upload-property",
-  upload.array("files[]", 10),
+  /* upload */multer.array("files[]", 10),
   (req, res) => {
     if (req.body === null && req.files === null) {
       return res.status(400).json({ msg: "No file uploaded" });
