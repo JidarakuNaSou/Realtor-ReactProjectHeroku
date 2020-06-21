@@ -28,7 +28,7 @@ export async function updateUserInfo(formData) {
 
 export async function uploadProperty(formData) {
   return axios
-    .post("upload-property", formData, {
+    .post("/upload-property", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
