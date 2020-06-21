@@ -4,6 +4,16 @@
 .profile {
   height: 300px;
   border-radius: 15px;
+  label{
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  input {
+    border: 2px solid;
+    border-radius: 9px;
+    border-color: #af9cda;
+    width: 120px;
+  }
 }
 .client {
   height: 250px;

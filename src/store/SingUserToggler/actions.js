@@ -19,12 +19,13 @@ export const setSignin = (signin_user) => ({
     }
 })
 
-export const setUserData = (last_name,first_name,img_url) => ({
+export const setUserData = (last_name,first_name,user_image,phone) => ({
     type: PUT_USER_DATA,
     payload: {
         last_name,
         first_name,
-        img_url
+        user_image,
+        phone
     } 
 })
 export const setShowModal3D = (showModal3D) => ({

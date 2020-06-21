@@ -1,10 +1,12 @@
 const express = require("express");
-const multer = require("multer");
+const aws = require('aws-sdk')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
 const Property = require("./models/Property");
-var path = require("path");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 4000;
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 
 const cors = require("cors");
 
@@ -35,25 +37,31 @@ const Users = require("./routers/Users");
 app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, "./server/uploads");
-  },
-  filename: function (req, file, callback) {
-    callback(null, Date.now() + "-" + file.originalname);
-  },
-});
+aws.config.update({
+  secretAccessKey : "JFIAwI+qw0U/makL8HyTrahjY3+ZDqcfIksSRURE",
+  accessKeyId:"AKIAIZXUZBC3YAI2PJHQ",
+  region:"eu-north-1"
+})
 
-app.put("/upload", multer({ storage }).array("files[]", 4), (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: "No file uploaded" });
-  }
-  return res.send(req.files);
-});
+const s3 = new aws.S3({})
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: '3drealtor-images',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
 
 app.post(
   "/upload-property",
-  multer({ storage }).array("files[]", 4),
+  upload.array("files[]", 10),
   (req, res) => {
     if (req.body === null && req.files === null) {
       return res.status(400).json({ msg: "No file uploaded" });
@@ -76,6 +84,8 @@ app.post(
       sketch3D: req.body.sketch3D,
       video: req.body.video,
       uploadedFile: req.files,
+      userId: req.body.userId,
+      status: "Продается",
       created: today,
     };
     Property.create(propertyData);

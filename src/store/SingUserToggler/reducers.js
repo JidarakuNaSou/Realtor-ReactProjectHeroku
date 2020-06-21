@@ -11,10 +11,10 @@ const defaultState = {
   signin_user: "signin",
   last_name: "",
   first_name: "",
-  img_url: "img/load_user_avatar.png",
+  user_img: null,
   showModal3D: false,
   showModalVideo: false,
-  phone: "7 996 333 10 20",
+  phone: null,
   property: null,
 };
 
@@ -37,7 +37,8 @@ const signtouserReducer = (state = defaultState, action) => {
         ...state,
         last_name: action.payload.last_name,
         first_name: action.payload.first_name,
-        img_url: action.payload.img_url,
+        user_image: action.payload.user_image,
+        phone: action.payload.phone,
       };
 
     case SET_SHOW_MODAL_3D:

@@ -94,7 +94,9 @@ class Registration extends React.Component {
         first_name: this.state.first_name,
         email: this.state.email,
         password: this.state.password,
-        replace_password: this.state.replace_password
+        replace_password: this.state.replace_password,
+        phone : null,
+        user_image : "img/load_user_avatar.png"
       };
 
       register(user).then(res => {

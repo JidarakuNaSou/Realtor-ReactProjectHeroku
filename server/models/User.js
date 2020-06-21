@@ -16,9 +16,18 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    user_image: {
+        type: String,
+    },
+    phone : {
+        type: String,
+    },
     date: {
         type: Date,
         default : Date.now
+    },
+    user_id:{
+        type: String,
     }
 })
 

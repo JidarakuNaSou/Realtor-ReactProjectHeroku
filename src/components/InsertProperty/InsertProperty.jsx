@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import jwt_decode from "jwt-decode";
 import Dropzone from "react-dropzone";
 import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -64,6 +64,14 @@ export default function InsertProperty(props) {
   const onSubmit = (data, event) => {
     event.preventDefault();
 
+     if(!sessionStorage.getItem("accesstoken"))
+    {
+      alert("Авторизуйтесь!");
+      return;
+    }
+
+    var decoded = jwt_decode(sessionStorage.getItem("accesstoken"));
+
     if (!uploadedFile) {
       alert("Загрузите фото");
       return;
@@ -72,6 +80,7 @@ export default function InsertProperty(props) {
       alert("Выберите тип недвижимости");
       return;
     }
+   
 
     const formData = new FormData();
     const updateFilesArray = uploadedFile;
@@ -101,6 +110,7 @@ export default function InsertProperty(props) {
     formData.append("sketch3D", sketch3D);
     formData.append("video", video);
     uploadProperty(formData);
+    formData.append("userId", decoded.userId);
     console.log("Новая запись");
     alert("Недвижимость выставлена!");
   };
@@ -113,11 +123,18 @@ export default function InsertProperty(props) {
   };
 
   const onChange3D = (e) => {
-    setSketch3D(`${e.target.value}/embed`);
+    if (e.target.value.slice(0,21) === "https://sketchfab.com") {
+      setSketch3D(`${e.target.value}/embed`);
+    } else {
+      setSketch3D(null);
+    }
   };
   const onChangeVideo = (e) => {
-    setVideo(`https://www.youtube.com/embed/${e.target.value.slice(32)}`);
-   
+    if (e.target.value.slice(0,23) === "https://www.youtube.com")
+      setVideo(`https://www.youtube.com/embed/${e.target.value.slice(32)}`);
+    else {
+      setVideo(null);
+    }
   };
   const handleMainPhoto = (photo) => {
     setMainPhoto(photo);
@@ -125,7 +142,6 @@ export default function InsertProperty(props) {
   const deletePhoto = (photo) => {
     const updateFiles = uploadedFile;
     const pathfiles = pathFile;
-    console.log("прошел тут");
     for (var i = pathfiles.length - 1; i >= 0; i--) {
       if (pathfiles[i] == photo) {
         pathfiles.splice(i, 1);

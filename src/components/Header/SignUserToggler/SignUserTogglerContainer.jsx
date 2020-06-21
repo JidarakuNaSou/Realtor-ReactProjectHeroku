@@ -17,7 +17,7 @@ class SignUserTogglerContainer extends React.Component {
         setUserData={this.props.setUserData}
         last_name={this.props.last_name}
         first_name={this.props.first_name}
-        img_url={this.props.img_url}
+        user_image={this.props.user_image}
       />
     );
   }
@@ -28,8 +28,8 @@ const mapStateToProps = state => {
     signin_user: state.signtouser.signin_user,
     last_name: state.signtouser.last_name,
     first_name: state.signtouser.first_name,
-    img_url: state.signtouser.img_url,
-
+    user_image: state.signtouser.user_image,
+    
   };
 };
 

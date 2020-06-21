@@ -33,13 +33,13 @@ class Property extends React.Component {
                   </div>
                 </div>
                 <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.countApartment}
+                  {this.props.property.countApartment === "" || this.props.property.countApartment === "undefined" ? "Не указано": this.props.property.countApartment}
                 </div>
                 <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.Space}
+                  {this.props.property.Space=== "" ? "Не указано": this.props.property.Space}
                 </div>
                 <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.Place}
+                  {this.props.property.Place=== "" ? "Не указано": this.props.property.Place}
                 </div>
               </div>
             </div>
@@ -124,7 +124,9 @@ class Property extends React.Component {
                   title="A 3D model"
                   width="200"
                   height="200"
-                  src={this.props.property.sketch3D}
+                  src={this.props.property.sketch3D === "null"
+                  ? null
+                  : this.props.property.sketch3D}
                   frameborder="0"
                   allow="autoplay; fullscreen; vr"
                   mozallowfullscreen="true"
@@ -137,7 +139,11 @@ class Property extends React.Component {
               <iframe
                 width="560"
                 height="250"
-                src={this.props.property.video}
+                src={
+                  this.props.property.video === "null"
+                    ? null
+                    : this.props.property.video
+                }
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen="true"

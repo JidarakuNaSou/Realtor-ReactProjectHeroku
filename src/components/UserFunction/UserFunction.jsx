@@ -7,33 +7,41 @@ export async function register(newUser) {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
-      password: newUser.password
+      password: newUser.password,
+      user_image: newUser.user_image,
     })
-    .then(res => {
+    .then((res) => {
+      return res.data;
+    });
+}
+export async function updateUserInfo(formData) {
+  return axios
+    .post("users/updateUserInfo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
       return res.data;
     });
 }
 
 export async function uploadProperty(formData) {
   return axios
-    .post(
-      "upload-property",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
-    )
-    .then(res => {
+    .post("upload-property", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
       return res.data;
     });
 }
 
 export async function getPropertys(typeProperty) {
-  return axios.get(`/getProperty?propertyType=${typeProperty}`).then(res => {
+  return axios.get(`/getProperty?propertyType=${typeProperty}`).then((res) => {
     if (res.data !== undefined) {
-      return res.data; 
+      return res.data;
     }
   });
 }
@@ -42,10 +50,9 @@ export async function login(user) {
   return axios
     .post("users/login", {
       email: user.email,
-      password: user.password
+      password: user.password,
     })
-    .then(res => {
-      console.log(res);
+    .then((res) => {
       if (res.data.error === null) {
         sessionStorage.setItem("accesstoken", res.data.tokens.accessToken);
         sessionStorage.setItem("refreshtoken", res.data.tokens.refreshToken);
@@ -56,7 +63,7 @@ export async function login(user) {
         return res.data;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 }
@@ -67,20 +74,20 @@ export async function userdata() {
   const AuthStr = "Bearer ".concat(accessToken);
   return axios
     .get("users/finduser", { headers: { Authorization: AuthStr } })
-    .then(res => {
+    .then((res) => {
       if (res.data !== undefined) {
         return res.data;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 }
 
-export const GetTokens = async refreshToken => {
+export const GetTokens = async (refreshToken) => {
   await axios
     .post("/refresh-tokens", { refreshToken })
-    .then(res => {
+    .then((res) => {
       if (res.data !== undefined) {
         sessionStorage.removeItem("accesstoken");
         sessionStorage.removeItem("refreshtoken");
@@ -88,7 +95,7 @@ export const GetTokens = async refreshToken => {
         sessionStorage.setItem("refreshtoken", res.data.refreshToken);
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };

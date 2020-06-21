@@ -102,7 +102,8 @@ class House extends React.Component {
                         parseInt(filterlist.Place) <=
                           parseInt(this.state.lastspace))||
                       (this.state.firstspace == "" &&
-                        this.state.lastspace == "") ? (
+                        this.state.lastspace == "") && 
+                        filterlist.status === "Продается"? (
                         <div className="col-sm-4 mx-6 d-flex justify-content-center">
                           <button
                             onClick={() => this.selectproperty(filterlist)}
@@ -113,11 +114,7 @@ class House extends React.Component {
                                   <div className="main_img">
                                     {filterlist.uploadedFile ? (
                                       <img
-                                        src={`./${filterlist.uploadedFile[0].destination.slice(
-                                          8
-                                        )}/${
-                                          filterlist.uploadedFile[0].filename
-                                        }`}
+                                        src={filterlist.uploadedFile[0].location}
                                         alt=""
                                       />
                                     ) : null}

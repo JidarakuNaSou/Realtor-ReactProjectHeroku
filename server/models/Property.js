@@ -50,6 +50,12 @@ const PropertySchema = new Schema({
   uploadedFile: {
     type: Object,
   },
+  userId:{
+    type: String,
+  },
+  status:{
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,

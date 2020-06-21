@@ -38,10 +38,12 @@ export default function SignUserToggler(props) {
       let user = userdata();
       user.then((res) => {
         if (res) {
+          console.log(res);
           props.setUserData(
             res.last_name,
             res.first_name,
-            "img/load_user_avatar.png"
+            res.user_image,
+            res.phone
           );
         } else {
           signinChange();
@@ -86,7 +88,7 @@ export default function SignUserToggler(props) {
               >
                 <img
                   className="user_avatar"
-                  src={props.img_url}
+                  src={props.user_image}
                   height="50"
                   width="50"
                   alt=""
