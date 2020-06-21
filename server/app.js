@@ -37,11 +37,7 @@ const Users = require("./routers/Users");
 app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
-aws.config.update({
-  secretAccessKey : "JFIAwI+qw0U/makL8HyTrahjY3+ZDqcfIksSRURE",
-  accessKeyId:"AKIAIZXUZBC3YAI2PJHQ",
-  region:"eu-north-1"
-})
+aws.config.region="eu-north-1";
 
 const s3 = new aws.S3({})
 
