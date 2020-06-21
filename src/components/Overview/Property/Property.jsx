@@ -59,9 +59,7 @@ class Property extends React.Component {
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
-                                    src={`./${uploadedFile.destination.slice(
-                                      8
-                                    )}/${uploadedFile.filename}`}
+                                    src={filterlist.uploadedFile[0].location}
                                     class="d-block "
                                     alt="Природа"
                                   ></img>
@@ -75,9 +73,7 @@ class Property extends React.Component {
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
-                                    src={`./${uploadedFile.destination.slice(
-                                      8
-                                    )}/${uploadedFile.filename}`}
+                                    src={filterlist.uploadedFile.location}
                                     class="d-block "
                                     alt="Природа"
                                   ></img>
