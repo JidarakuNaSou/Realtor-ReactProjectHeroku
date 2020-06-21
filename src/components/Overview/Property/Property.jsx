@@ -59,7 +59,8 @@ class Property extends React.Component {
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
-                                    src={this.props.property.uploadedFile[0].location}
+                                    src={uploadedFile.location}
+                              
                                     class="d-block "
                                     alt="Природа"
                                   ></img>
@@ -73,7 +74,7 @@ class Property extends React.Component {
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
-                                    src={this.props.property.uploadedFile.location}
+                                    src={uploadedFile.location}
                                     class="d-block "
                                     alt="Природа"
                                   ></img>
