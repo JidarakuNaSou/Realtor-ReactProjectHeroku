@@ -1,12 +1,10 @@
 const express = require("express");
-const aws = require('aws-sdk')
-const multer = require('multer')
-const multerS3 = require('multer-s3')
+const multer = require("multer");
 const Property = require("./models/Property");
-const path = require("path");
+var path = require("path");
 const app = express();
 const PORT = process.env.PORT || 4000;
-const bodyParser = require("body-parser");
+var bodyParser = require("body-parser");
 
 const cors = require("cors");
 
@@ -37,9 +35,25 @@ const Users = require("./routers/Users");
 app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./server/uploads");
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+app.put("/upload", multer({ storage }).array("files[]", 4), (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+  return res.send(req.files);
+});
+
 app.post(
   "/upload-property",
-  multer().array("files[]", 10),
+  multer({ storage }).array("files[]", 10),
   (req, res) => {
     if (req.body === null && req.files === null) {
       return res.status(400).json({ msg: "No file uploaded" });
