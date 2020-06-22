@@ -98,7 +98,7 @@ class Apartments extends React.Component {
                         parseInt(this.state.firstspace) &&
                         this.state.lastspace == "") ||
                       (this.state.firstspace == "" &&
-                        parseInt(filterlist.Place) <=
+                        parseInt(filterlist.Space) <=
                           parseInt(this.state.lastspace))||
                       (this.state.firstspace == "" &&
                         this.state.lastspace == "") && 
