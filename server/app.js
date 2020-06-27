@@ -13,8 +13,8 @@ const cors = require("cors");
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static("/public"));
-app.use(express.static("/build"));
+app.use(express.static("../public"));
+app.use(express.static("../build"));
 
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
@@ -133,10 +133,10 @@ app.get("/getProperty", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-  app.use(express.static("public"));
+  app.use(express.static("../build"));
+  app.use(express.static("../public"));
 
-  app.get("/", function root(req, res) {
+  app.get("/*", function root(req, res) {
     res.sendFile(__dirname + "/build" + '/index.html');
   });
 }
