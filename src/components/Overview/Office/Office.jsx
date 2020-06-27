@@ -216,7 +216,7 @@ class Office extends React.Component {
               <label className="col-2">От: </label>
               <input
                 className="col-6"
-                placeholder="₽"
+                placeholder="м/кв"
                 type="text"
                 name="firstspace"
                 onChange={this.handleinputfiltr}
@@ -229,7 +229,7 @@ class Office extends React.Component {
               <label className="col-2">До: </label>
               <input
                 className="col-6"
-                placeholder="₽"
+                placeholder="м/кв"
                 type="text"
                 name="lastspace"
                 onChange={this.handleinputfiltr}

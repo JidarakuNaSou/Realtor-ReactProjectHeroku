@@ -4,46 +4,67 @@ class Property extends React.Component {
   render() {
     return (
       <section className="Property">
-        <div className="col ml-3 mt-5 d-flex justify-content-between">
-          <h2>{`${this.props.property.Street} ${this.props.property.House}`}</h2>
+        <div className="col ml-3 mt-5 d-flex justify-content-between title-street">
+          <h1>
+            {`${this.props.property.Street} ${this.props.property.House}`}{" "}
+            {this.props.property.Apartaments != ""
+              ? `, кв ${this.props.property.Apartaments}`
+              : null}
+          </h1>
         </div>
 
         <div className="mt-3">
           <div className="row shadow infoproperty m-4">
-            <div className="col-8">
-              <div className="row ">
-                <textarea
-                  className="infoarea"
-                  name="Title"
-                  id=""
-                  disabled
-                  cols="95"
-                  rows="10"
-                  value={this.props.property.Title}
-                ></textarea>
+            <div className="col-7">
+              <div className="row description">
+                {this.props.property.Title
+                  ? this.props.property.Title
+                  : "Нет описания"}
               </div>
               <div className="row">
-                <div className="col-5 user">
+                <div className="col-4 user">
                   <div className="col-3">
-                    <img src={this.props.property.img_url} alt="" />
+                    <img src={this.props.property.user_image} alt="" />
                   </div>
-                  <div className="col-9 ml-3">
-                    <div className="row">{`${this.props.property.first_name} ${this.props.property.last_name}`}</div>
-                    <div className="row">{this.props.property.phone}</div>
+                  <div className="col-9 ml-3 d-flex align-items-center">
+                    <div className="row">
+                      <div className="col-12 user_info"><h6>{`${this.props.property.first_name} ${this.props.property.last_name}`}</h6></div>
+                      <div className="col-12 user_info"><h6>{this.props.property.phone}</h6></div>
+                    </div>
                   </div>
                 </div>
-                <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.countApartment === "" || this.props.property.countApartment === "undefined" ? "Не указано": this.props.property.countApartment}
+                <div className="col-1 d-flex d-flex align-items-center ">
+                  <div className="col-12">
+                    <div className="d-flex justify-content-center countapart">
+                      {this.props.property.countApartment === "" ||
+                      this.props.property.countApartment === "undefined"
+                        ? ""
+                        : this.props.property.countApartment}
+                    </div>
+                  </div>
                 </div>
-                <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.Space=== "" ? "Не указано": this.props.property.Space}
+                <div className="col-3 d-flex align-items-center ">
+                  <div className="col-12">
+                    <div className="d-flex justify-content-center space">
+                      {this.props.property.Space === ""
+                        ? ""
+                        : `${this.props.property.Space}м/кв`}
+                    </div>
+                  </div>
                 </div>
-                <div className="col-2 d-flex align-items-end mb-3">
-                  {this.props.property.Place=== "" ? "Не указано": this.props.property.Place}
+                <div className="col-3 d-flex d-flex align-items-center ">
+                  <div className="col-12">
+                    
+                    <h1 className="d-flex justify-content-center">
+                      {this.props.property.Place === ""
+                        ? ""
+                        : `${this.props.property.Place}₽`}
+                    </h1>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-5 d-flex align-items-center">
               <div className="col-12 caruselphoto">
                 <div
                   id="sliderBigImages"
@@ -55,12 +76,11 @@ class Property extends React.Component {
                       (uploadedFile, index) => {
                         return index == 0 ? (
                           <div class="carousel-item active">
-                            <div className="row">
+                            <div className="row d-flex justify-content-center">
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
                                     src={uploadedFile.location}
-                              
                                     class="d-block "
                                     alt="Природа"
                                   ></img>
@@ -70,7 +90,7 @@ class Property extends React.Component {
                           </div>
                         ) : (
                           <div class="carousel-item">
-                            <div className="row">
+                            <div className="row d-flex justify-content-center">
                               <div className="item" key={index}>
                                 <span data-delete="">
                                   <img
@@ -87,6 +107,25 @@ class Property extends React.Component {
                     )}
                   </div>
                 </div>
+                <ol class="carousel-indicators">
+                  {this.props.property.uploadedFile.map(
+                    (uploadedFile, index) => {
+                      return index === 0 ? (
+                        <li
+                          data-target="#sliderBigImages"
+                          data-slide-to={`${index}`}
+                          key={index}
+                        ></li>
+                      ) : (
+                        <li
+                          data-target="#sliderBigImages"
+                          data-slide-to={`${index}`}
+                          key={index}
+                        ></li>
+                      );
+                    }
+                  )}
+                </ol>
                 <a
                   class="carousel-control-prev"
                   href="#sliderBigImages"
@@ -121,9 +160,11 @@ class Property extends React.Component {
                   title="A 3D model"
                   width="200"
                   height="200"
-                  src={this.props.property.sketch3D === "null"
-                  ? null
-                  : this.props.property.sketch3D}
+                  src={
+                    this.props.property.sketch3D === "null"
+                      ? null
+                      : this.props.property.sketch3D
+                  }
                   frameborder="0"
                   allow="autoplay; fullscreen; vr"
                   mozallowfullscreen="true"

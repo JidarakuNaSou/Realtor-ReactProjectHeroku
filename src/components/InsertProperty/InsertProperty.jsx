@@ -106,11 +106,11 @@ export default function InsertProperty(props) {
     formData.append("phone", props.phone);
     formData.append("last_name", props.last_name);
     formData.append("first_name", props.first_name);
-    formData.append("img_url", props.img_url);
+    formData.append("user_image", props.user_image);
     formData.append("sketch3D", sketch3D);
     formData.append("video", video);
     uploadProperty(formData);
-    formData.append("userId", decoded.userId);
+    formData.append("user_id", decoded.user_id);
     console.log("Новая запись");
     alert("Недвижимость выставлена!");
   };

@@ -1,5 +1,15 @@
 .infoproperty {
-  height: 500px;
+  height: 450px;
+  .description {
+    height: 300px;
+    color: #243762;
+    margin-top: 40px;
+    margin-left: 30px;
+    font-size: 18px;
+  }
+}
+.caruselphoto {
+  height: 400px;
 }
 textarea {
   margin-top: 50px;
@@ -18,23 +28,48 @@ textarea {
   border-color: #af9cda;
 }
 .Property {
+  .countapart {
+    color: #243762;
+    font-size: 30px;
+  }
+  .space {
+    color: #243762;
+    font-size: 30px;
+  }
+  .user_info {
+    color: #243762;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  h6 {
+    font-size: 20px;
+  }
+  h1 {
+    color: #af9cda;
+    margin-bottom: 0;
+  }
+  .carousel-indicators {
+    margin-top: 0;
+    top: -20%;
+  }
+  .slide {
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
   .user {
-    margin-top: 120px;
-    margin-left: 20px;
-    margin-right: 0px;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 5px;
+    margin-right: 0;
+    h2 {
+      margin-bottom: 0;
+    }
     img {
-      height: 50px;
-      width: 50px;
+      height: 70px;
+      width: 70px;
       object-fit: cover;
       object-position: 50% 50%;
-    }
-  }
-  .carousel-inner {
-    margin-top: 55px;
-    height: 230px;
-    img {
-      background-color: #af9cda;
-      padding: 20px;
     }
   }
   .video,
@@ -52,19 +87,22 @@ textarea {
 
   .carousel-item {
     img {
-      width: 250px;
-      height: 250px;
+      width: 300px;
+      height: 300px;
       object-fit: cover;
       object-position: 50% 50%;
-      margin-left: 65px;
     }
   }
   .carousel-control-next-icon {
+    content: url("http://localhost:3000/img/Group6.png");
+    height: 50px;
+    width: 50px;
     margin-top: 10px;
-    background-color: #af9cda;
   }
   .carousel-control-prev-icon {
+    content: url("http://localhost:3000/img/Group7.png");
+    height: 50px;
+    width: 50px;
     margin-top: 10px;
-    background-color: #af9cda;
   }
 }

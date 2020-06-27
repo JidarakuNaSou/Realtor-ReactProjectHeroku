@@ -13,7 +13,7 @@ class InsertPropertyContainer extends React.Component {
         setShowModalVideo={this.props.setShowModalVideo}
         showModalVideo={this.props.showModalVideo}
         showModal3D={this.props.showModal3D}
-        img_url={this.props.img_url}
+        user_image={this.props.user_image}
         last_name={this.props.last_name}
         first_name={this.props.first_name}
         phone={this.props.phone}
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     showModal3D: state.signtouser.showModal3D,
     last_name: state.signtouser.last_name,
     first_name: state.signtouser.first_name,
-    img_url: state.signtouser.img_url,
+    user_image: state.signtouser.user_image,
     phone: state.signtouser.phone,
   };
 };

@@ -39,7 +39,7 @@ const PropertySchema = new Schema({
   first_name: {
     type: String,
   },
-  img_url: {
+  user_image: {
     type: String,
   },
   phone: {
@@ -54,7 +54,7 @@ const PropertySchema = new Schema({
   uploadedFile: {
     type: Object,
   },
-  userId:{
+  user_id:{
     type: String,
   },
   status:{

@@ -11,7 +11,7 @@ const defaultState = {
   signin_user: "signin",
   last_name: "",
   first_name: "",
-  user_img: null,
+  user_image: null,
   showModal3D: false,
   showModalVideo: false,
   phone: null,

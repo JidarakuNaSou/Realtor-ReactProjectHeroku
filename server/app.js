@@ -1,13 +1,13 @@
 const express = require("express");
 const multer = require("multer");
 const aws = require("aws-sdk");
-const uuid = require("uuid/v4")
+const uuid = require("uuid/v4");
 const multerS3 = require("multer-s3");
 const Property = require("./models/Property");
-var path = require("path");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 4000;
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 
 const cors = require("cors");
 
@@ -39,7 +39,9 @@ app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
 aws.config.update({
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "3s9SdIPgXWUvTu6uYTiUcHFi6nFPp9CeWRkJtFaC",
+  secretAccessKey:
+    process.env.AWS_SECRET_ACCESS_KEY ||
+    "3s9SdIPgXWUvTu6uYTiUcHFi6nFPp9CeWRkJtFaC",
   accessKeyId: process.env.AWS_ACCESS_KEY_ID || "AKIAIEQXDQHU5PK6S3VA",
   region: "eu-north-1",
 });
@@ -66,6 +68,7 @@ app.post("/upload-property", upload.array("files[]", 10), (req, res) => {
   }
   const today = new Date();
   const propertyData = {
+    propertyId: uuid(),
     typeProperty: req.body.typeProperty,
     Street: req.body.Street,
     House: req.body.House,
@@ -77,12 +80,12 @@ app.post("/upload-property", upload.array("files[]", 10), (req, res) => {
     Title: req.body.Title,
     last_name: req.body.last_name,
     first_name: req.body.first_name,
-    img_url: req.body.img_url,
+    user_image: req.body.user_image,
     phone: req.body.phone,
     sketch3D: req.body.sketch3D,
     video: req.body.video,
     uploadedFile: req.files,
-    userId: req.body.userId,
+    user_id: req.body.user_id,
     status: "Продается",
     created: today,
   };
@@ -130,6 +133,10 @@ app.get("/getProperty", (req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 app.listen(PORT, () => {
