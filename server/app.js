@@ -133,11 +133,11 @@ app.get("/getProperty", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../build"));
-  app.use(express.static("../public"));
+  app.use(express.static(__dirname + "/../build"));
+  app.use(express.static(__dirname + "/../public"));
 
   app.get("/*", function root(req, res) {
-    res.sendFile(__dirname + "/../public" + '/index.html');
+    res.sendFile(__dirname + "/../build" + '/index.html');
   });
 }
 
