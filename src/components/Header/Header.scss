@@ -103,20 +103,3 @@
     }
   }
 }
-
-@media (max-width: 575px) {
-  .header {
-    height: 200px;
-  }
-
-  .header__nav {
-    justify-content: space-between;
-    order: 3;
-  }
-  .header__logo {
-    order: 1;
-  }
-  .header__signin {
-    order: 2;
-  }
-}

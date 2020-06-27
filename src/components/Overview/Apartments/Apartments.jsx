@@ -88,9 +88,9 @@ class Apartments extends React.Component {
                         parseInt(filterlist.Place) <=
                           parseInt(this.state.lastprice)) ||
                       (this.state.firstprice == "" &&
-                        this.state.lastprice == "") && (
+                        this.state.lastprice == "")) && 
 
-                        parseInt(filterlist.Space) >=
+                        ((parseInt(filterlist.Space) >=
                           parseInt(this.state.firstspace) &&
                         parseInt(filterlist.Space) <=
                           parseInt(this.state.lastspace)) ||
@@ -101,9 +101,9 @@ class Apartments extends React.Component {
                         parseInt(filterlist.Space) <=
                           parseInt(this.state.lastspace))||
                       (this.state.firstspace == "" &&
-                        this.state.lastspace == "") && 
+                        this.state.lastspace == "")) && 
                         filterlist.status === "Продается" ? (
-                        <div className="col-sm-4 mx-6 d-flex justify-content-center">
+                        <div className="col-4 d-flex justify-content-center">
                           <button
                             onClick={() => this.selectproperty(filterlist)}
                           >
@@ -191,7 +191,7 @@ class Apartments extends React.Component {
                             </NavLink>
                           </button>
                         </div>
-                      ) : null)
+                      ) : null
                     );
                   })
                 : null}

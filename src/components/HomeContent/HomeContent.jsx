@@ -4,12 +4,12 @@ import { NavLink } from "react-router-dom";
 class HomeContent extends React.Component {
   render() {
     return (
-      <section className="content">
+      <section className="content homecontent">
         <div id="skySlider" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
               <div className="row">
-                <div className="illustration col-12 col-sm-7 d-flex align-items-center justify-content-center">
+                <div className="illustration col-7 d-flex align-items-center justify-content-center">
                   <img
                     src="img/1.svg"
                     class="d-block"
@@ -32,7 +32,7 @@ class HomeContent extends React.Component {
             </div>
             <div class="carousel-item">
               <div className="row">
-                <div className="illustration col-12 col-sm-7 d-flex align-items-center justify-content-center">
+                <div className="illustration col-7 d-flex align-items-center justify-content-center">
                   <img
                     src="img/Office.svg"
                     class="d-block"
@@ -55,7 +55,7 @@ class HomeContent extends React.Component {
             </div>
             <div class="carousel-item">
               <div className="row">
-                <div className="illustration col-12 col-sm-7 d-flex align-items-center justify-content-center">
+                <div className="illustration col-7 d-flex align-items-center justify-content-center">
                   <img
                     src="img/2.svg"
                     class="d-block"
@@ -78,7 +78,7 @@ class HomeContent extends React.Component {
             </div>
             <div class="carousel-item">
               <div className="row">
-                <div className="illustration col-12 col-sm-7 d-flex align-items-center justify-content-center">
+                <div className="illustration col-7 d-flex align-items-center justify-content-center">
                   <img
                     src="img/3.svg"
                     class="d-block"

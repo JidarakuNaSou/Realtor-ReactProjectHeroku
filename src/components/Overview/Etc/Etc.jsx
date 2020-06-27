@@ -100,7 +100,7 @@ class Etc extends React.Component {
                       (this.state.firstspace == "" &&
                         this.state.lastspace == "") && 
                         filterlist.status === "Продается"? (
-                        <div className="col-sm-4 mx-6 d-flex justify-content-center">
+                        <div className="col-4 mx-6 d-flex justify-content-center">
                           <button
                             onClick={() => this.selectproperty(filterlist)}
                           >

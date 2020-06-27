@@ -47,6 +47,7 @@ export async function getPropertys(typeProperty) {
 }
 
 export async function login(user) {
+  console.log(user);
   return axios
     .post("users/login", {
       email: user.email,

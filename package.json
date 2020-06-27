@@ -2,6 +2,7 @@
   "name": "rieltor",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "aws-sdk": "^2.701.0",
     "axios": "^0.19.2",

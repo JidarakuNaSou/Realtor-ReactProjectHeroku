@@ -1,8 +1,12 @@
 const express = require("express");
 const users = express.Router();
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
+const multer = require("multer");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const uuid = require("uuid/v4");
 const generatetokens = require("../generateTokens/generatetokens");
 const { secret } = require("../config/config").jwt;
 const authmiddleware = require("../middleware/authmiddleware");
@@ -11,11 +15,11 @@ const User = require("../models/User");
 const Token = require("../models/token");
 users.use(cors());
 
-const updateTokens = (userId) => {
-  const accessToken = generatetokens.generateAccessToken(userId);
+const updateTokens = (user_id) => {
+  const accessToken = generatetokens.generateAccessToken(user_id);
   const refreshToken = generatetokens.generateRefreshToken();
   return generatetokens
-    .replaceDbRefreshToken(refreshToken.id, userId)
+    .replaceDbRefreshToken(refreshToken.id, user_id)
     .then(() => ({
       accessToken,
       refreshToken: refreshToken.tokens,
@@ -26,37 +30,63 @@ users.get("/finduser", authmiddleware, (req, res) => {
   const authHeader = req.get("Authorization");
   const token = authHeader.replace("Bearer ", "");
   const payload = jwt.verify(token, secret);
-  User.findOne({ _id: payload.userId }).then((user) => {
+  User.findOne({ user_id: payload.user_id }).then((user) => {
     if (user) {
       return res.json(user);
     } else return console.log("there is no such user ");
   });
 });
 
-users.post("/updateUserInfo", (req, res) => {
-  const userData = {
+aws.config.update({
+  secretAccessKey:
+    process.env.AWS_SECRET_ACCESS_KEY ||
+    "OmCbC+sxR7nUV2YBR504SG9lwXhJ8RnvEnZ6EB3L",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "AKIAJJL5XSK64P26YVNA",
+  region: "eu-north-1",
+});
+
+const s3 = new aws.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET || "3drealtor-images",
+    acl: "public-read",
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString());
+    },
+  }),
+});
+
+users.post("/updateUserInfo", upload.array("files", 1), (req, res) => {
+  const update = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     phone: req.body.phone,
     user_image: req.body.user_image,
   };
-  const userId = req.body.userId;
-  User.update(
-    { _id : userId },
+
+  User.updateOne(
+    { user_id: `${req.body.user_id}` },
     {
-      $set: {
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        phone: userData.phone,
-        user_image: userData.user_image,
-      },
-    }
+      first_name: `${req.body.first_name}`,
+      last_name: `${req.body.last_name}`,
+      phone: `${req.body.phone}`,
+      user_image: `${req.body.user_image}`,
+    },
+    function (err, res) {}
   );
+
+  return res.send("обновлено");
 });
 
 users.post("/register", (req, res) => {
   const today = new Date();
   const userData = {
+    user_id: uuid(),
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
@@ -65,7 +95,6 @@ users.post("/register", (req, res) => {
     user_image: req.body.user_image,
     created: today,
   };
-  console.log(req.body.user_image);
   User.findOne({
     email: req.body.email,
   })
@@ -97,7 +126,7 @@ users.post("/login", (req, res) => {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          updateTokens(user._id).then((tokens) =>
+          updateTokens(user.user_id).then((tokens) =>
             res.json({ tokens, error: null })
           );
         } else {
@@ -137,7 +166,7 @@ const refreshToken = (req, res) => {
       if (token === null) {
         throw new Error("Invalid token!");
       }
-      return updateTokens(token.userId);
+      return updateTokens(token.user_id);
     })
     .then((tokens) => res.json(tokens))
     .catch((err) => res.status(400).json({ message: err.message }));

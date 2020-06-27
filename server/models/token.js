@@ -5,7 +5,7 @@ const TokenSchema = new Schema({
     tokenId: {
         type: String
     },
-    userId:{
+    user_id:{
         type: String
     },
 })

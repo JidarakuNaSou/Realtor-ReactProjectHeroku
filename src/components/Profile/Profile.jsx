@@ -49,13 +49,15 @@ class Profile extends React.Component {
       this.state.user_image,
       this.state.phone
     );
+
     formData.append("last_name", this.state.last_name);
+    
     formData.append("first_name", this.state.first_name);
     formData.append("phone", this.state.phone);
     formData.append("user_image", this.state.user_image);
-    formData.append("userId", decoded.userId);
+    formData.append("user_id", decoded.user_id);
+    console.log(formData.getAll("user_id"))
     updateUserInfo(formData)
-    console.log(this.state);
   };
 
   render() {

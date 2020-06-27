@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const aws = require("aws-sdk");
+const uuid = require("uuid/v4")
 const multerS3 = require("multer-s3");
 const Property = require("./models/Property");
 var path = require("path");
@@ -38,8 +39,8 @@ app.use("/users", Users.users);
 app.use("/refresh-tokens", Users.refreshToken);
 
 aws.config.update({
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "OmCbC+sxR7nUV2YBR504SG9lwXhJ8RnvEnZ6EB3L",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "AKIAJJL5XSK64P26YVNA",
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "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",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "AKIAIEQXDQHU5PK6S3VA",
   region: "eu-north-1",
 });
 
@@ -48,7 +49,7 @@ const s3 = new aws.S3();
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: process.env.S3_BUCKET || "3drealtor-images",
+    bucket: process.env.S3_BUCKET || "test-bucket-10325",
     acl: "public-read",
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });

@@ -6,7 +6,7 @@ import SignUserTogglerContainer from "./SignUserToggler/SignUserTogglerContainer
 export default function Header(props) {
   return (
     <header className="header row">
-      <div className="header_logo col col-sm-2 " >
+      <div className="header_logo col-2 " >
         <ul className="header__items">
           <li className="header__item">
             <NavLink exact to="/">
@@ -21,14 +21,14 @@ export default function Header(props) {
           </li>
         </ul>
       </div>
-      <div className="header__nav__search col-sm-5 d-flex">
+      <div className="header__nav__search col-5 d-flex">
         <input class="search" type="search" placeholder="ПОИСК" />
         <button type="button" className="search__btn btns">
           <img src="img/btn_search.svg" alt="" />
         </button>
       </div>
 
-      <div className="header__nav col-12 col-sm-2">
+      <div className="header__nav col-2">
         <ul className="header__nav__items d-flex justify-content-end">
           <li className="header__nav__item">
             <NavLink exact to="/">
@@ -38,7 +38,7 @@ export default function Header(props) {
         </ul>
       </div>
 
-      <div className="overw col-12 col-sm-1">
+      <div className="overw col-1">
         <div class="dropdown open">
           <button
             class="dropdown-toggle"

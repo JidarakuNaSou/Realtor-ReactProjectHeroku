@@ -6,16 +6,16 @@ const mongoose =require("mongoose");
 
 const Token = require("../models/token");
 
-const generateAccessToken = (userId) => {
+const generateAccessToken = (user_id) => {
     const payload = {
-        userId,
+        user_id,
         type: tokens.access.type
     };
     const option = {expiresIn: tokens.access.expiresIn};
     return jwt.sign(payload,secret,option);
 }
 
-const generateRefreshToken = (userId) => {
+const generateRefreshToken = (user_id) => {
     const payload = {
         id: uuid(),
         type: tokens.refresh.type
@@ -28,10 +28,10 @@ const generateRefreshToken = (userId) => {
     }
 }
 
-const replaceDbRefreshToken = (tokenId,userId) => 
-    Token.findOneAndDelete({userId})
+const replaceDbRefreshToken = (tokenId,user_id) => 
+    Token.findOneAndDelete({user_id})
     .exec()
-    .then(() => {Token.create({tokenId,userId})})
+    .then(() => {Token.create({tokenId,user_id})})
 
 module.exports = {
     generateAccessToken,

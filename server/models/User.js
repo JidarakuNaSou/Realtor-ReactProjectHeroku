@@ -2,6 +2,10 @@ const mongoose =require("mongoose");
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
+    user_id:{
+        type: String,
+        required: true
+    },
     first_name: {
         type: String
     },
@@ -26,9 +30,7 @@ const UserSchema = new Schema({
         type: Date,
         default : Date.now
     },
-    user_id:{
-        type: String,
-    }
+    
 })
 
 module.exports = User = mongoose.model("users",UserSchema)

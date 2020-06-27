@@ -48,6 +48,10 @@ textarea {
   resize: none;
 }
 
+.container-fluid { 
+  width: 1360px !important; 
+}
+
 @import "./scss/fonts";
 @import "./components/Header/Header";
 @import "./components/Overview/Apartments/Apartments";

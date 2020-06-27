@@ -1,6 +1,5 @@
-.illustration img {
-  height: 60vh;
-  width: 60vw;
+.homecontent{
+  margin-top: 75px;
 }
 
 ul,
@@ -34,7 +33,7 @@ li {
 }
 .carousel-indicators {
   position: relative;
-  margin-top: 75px;
+  margin-top: 150px;
   li {
     border: 2px solid rgba(36, 55, 98, 1);
     width: 10px;
@@ -47,19 +46,5 @@ li {
     border: 0px none;
     height: 14px;
     width: 14px;
-  }
-}
-
-@media (max-width: 575px){
-  .title{
-    &__item{
-      margin: auto;
-      margin-top: 20px;
-    }
-    h1,h3,h6,.btn{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
 }

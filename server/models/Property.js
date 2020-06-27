@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PropertySchema = new Schema({
+  propertyId:{
+    type: String,
+    required: true
+  },
   typeProperty: {
     type: String,
   },
