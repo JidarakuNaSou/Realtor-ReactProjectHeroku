@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 app.use(express.static(__dirname));
+ app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.static("../public"));
 app.use(express.static("../build"));
 
@@ -133,10 +134,11 @@ app.get("/getProperty", (req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
+  app.use(express.static("public"));
 
-  app.get ('*', function (req, res) { 
-    res.sendFile (path.join (__dirname, 'public', 'index.html')) ; 
-  }); 
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    });
 }
 
 app.listen(PORT, () => {
