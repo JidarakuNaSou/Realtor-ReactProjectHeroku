@@ -88,7 +88,7 @@ export default function SignUserToggler(props) {
               >
                 <img
                   className="user_avatar"
-                  src={props.user_image}
+                  src={`../${props.user_image}`}
                   height="50"
                   width="50"
                   alt=""

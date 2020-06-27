@@ -11,7 +11,7 @@ export default function Header(props) {
           <li className="header__item">
             <NavLink exact to="/">
               <img
-                src="img/logo.svg"
+                src={`../img/logo.svg`}
                 className="header__logo "
                 whidth="41"
                 hight="35"
@@ -21,14 +21,9 @@ export default function Header(props) {
           </li>
         </ul>
       </div>
-      <div className="header__nav__search col-5 d-flex">
-        <input class="search" type="search" placeholder="ПОИСК" />
-        <button type="button" className="search__btn btns">
-          <img src="img/btn_search.svg" alt="" />
-        </button>
-      </div>
+      
 
-      <div className="header__nav col-2">
+      <div className="header__nav col-7">
         <ul className="header__nav__items d-flex justify-content-end">
           <li className="header__nav__item">
             <NavLink exact to="/">

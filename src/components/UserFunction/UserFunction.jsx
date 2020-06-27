@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 export async function register(newUser) {
   return axios
-    .post("users/register", {
+    .post("..users/register", {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
@@ -38,10 +38,19 @@ export async function uploadProperty(formData) {
     });
 }
 
-export async function getPropertys(typeProperty) {
-  return axios.get(`/getProperty?propertyType=${typeProperty}`).then((res) => {
+export async function getProperty(propertyId) {
+  return axios.get(`/getProperty?propertyId=${propertyId}`).then((res) => {
     if (res.data !== undefined) {
-      console.log(`/getProperty?propertyType=${typeProperty}`);
+      console.log(`/getProperty?propertyId=${propertyId}`);
+      return res.data;
+    }
+  });
+}
+
+export async function getPropertys(typeProperty) {
+  return axios.get(`/getPropertys?propertyType=${typeProperty}`).then((res) => {
+    if (res.data !== undefined) {
+      console.log(`/getPropertys?propertyType=${typeProperty}`);
       return res.data;
     }
   });
@@ -50,12 +59,14 @@ export async function getPropertys(typeProperty) {
 export async function login(user) {
   console.log(user);
   return axios
-    .post("users/login", {
+    .post("../users/login", {
       email: user.email,
       password: user.password,
     })
     .then((res) => {
+      console.log(res)
       if (res.data.error === null) {
+        console.log(res.data.tokens.accessToken)
         sessionStorage.setItem("accesstoken", res.data.tokens.accessToken);
         sessionStorage.setItem("refreshtoken", res.data.tokens.refreshToken);
         return res.data;
@@ -75,7 +86,7 @@ export async function userdata() {
   const accessToken = sessionStorage.getItem("accesstoken");
   const AuthStr = "Bearer ".concat(accessToken);
   return axios
-    .get("users/finduser", { headers: { Authorization: AuthStr } })
+    .get("../users/finduser", { headers: { Authorization: AuthStr } })
     .then((res) => {
       if (res.data !== undefined) {
         return res.data;

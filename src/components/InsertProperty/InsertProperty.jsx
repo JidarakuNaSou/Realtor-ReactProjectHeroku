@@ -10,10 +10,10 @@ export default function InsertProperty(props) {
   const [mainPhoto, setMainPhoto] = useState();
   const { register, handleSubmit } = useForm();
   const [pathFile, setPathFile] = useState();
-  const [sketch3D, setSketch3D] = useState(null);
-  const [video, setVideo] = useState(null);
+  const [sketch3D, setSketch3D] = useState("");
+  const [video, setVideo] = useState("");
   const [typeProperty, setTypeProperty] = useState("Выбрать");
-  const [countApartment, setCountApartment] = useState();
+  const [countApartment, setCountApartment] = useState("");
 
   const handleOnDrop = (files, rejectedFiles) => {
     if (!uploadedFile) {
@@ -64,8 +64,7 @@ export default function InsertProperty(props) {
   const onSubmit = (data, event) => {
     event.preventDefault();
 
-     if(!sessionStorage.getItem("accesstoken"))
-    {
+    if (!sessionStorage.getItem("accesstoken")) {
       alert("Авторизуйтесь!");
       return;
     }
@@ -80,7 +79,6 @@ export default function InsertProperty(props) {
       alert("Выберите тип недвижимости");
       return;
     }
-   
 
     const formData = new FormData();
     const updateFilesArray = uploadedFile;
@@ -119,21 +117,31 @@ export default function InsertProperty(props) {
     setTypeProperty(e.target.value);
   };
   const handleCountApartment = (e) => {
-    setCountApartment(e.target.value);
+    if (
+      e.target.value === undefined ||
+      e.target.value === "undefined" ||
+      e.target.value === "" ||
+      e.target.value === null ||
+      e.target.value === "null"
+    )
+      setCountApartment("");
+    else {
+      setCountApartment(e.target.value);
+    }
   };
 
   const onChange3D = (e) => {
-    if (e.target.value.slice(0,21) === "https://sketchfab.com") {
+    if (e.target.value.slice(0, 21) === "https://sketchfab.com") {
       setSketch3D(`${e.target.value}/embed`);
     } else {
-      setSketch3D(null);
+      setSketch3D("");
     }
   };
   const onChangeVideo = (e) => {
-    if (e.target.value.slice(0,23) === "https://www.youtube.com")
+    if (e.target.value.slice(0, 23) === "https://www.youtube.com")
       setVideo(`https://www.youtube.com/embed/${e.target.value.slice(32)}`);
     else {
-      setVideo(null);
+      setVideo("");
     }
   };
   const handleMainPhoto = (photo) => {
@@ -604,7 +612,7 @@ export default function InsertProperty(props) {
 
         <div className="row Insertform">
           <div className="col-4 shadow upl3dmodel d-flex justify-content-center align-items-center">
-            {props.showModal3D == false && sketch3D == null ? (
+            {props.showModal3D == false && sketch3D == "" ? (
               <button onClick={handleShow3D} className="header__btn m3dbtn">
                 Загрузить 3D Модель
               </button>
@@ -626,7 +634,7 @@ export default function InsertProperty(props) {
 
           <div className="col-1"></div>
           <div className="col-7 shadow uplvideo d-flex justify-content-center align-items-center">
-            {props.showModalVideo == false && video == null ? (
+            {props.showModalVideo == false && video == "" ? (
               <button
                 onClick={handleShowVideo}
                 className="header__btn videobtn"

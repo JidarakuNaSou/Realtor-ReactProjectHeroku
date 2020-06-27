@@ -10,6 +10,7 @@ const uuid = require("uuid/v4");
 const generatetokens = require("../generateTokens/generatetokens");
 const { secret } = require("../config/config").jwt;
 const authmiddleware = require("../middleware/authmiddleware");
+const Property = require("../models/Property");
 
 const User = require("../models/User");
 const Token = require("../models/token");
@@ -68,19 +69,33 @@ users.post("/updateUserInfo", upload.array("files", 1), (req, res) => {
     phone: req.body.phone,
     user_image: req.body.user_image,
   };
+  User.findOne({ user_id: req.body.user_id }).then((user) => {
+    if (user) {
+      User.updateOne(
+        { user_id: `${req.body.user_id}` },
+        {
+          first_name: `${req.body.first_name}`,
+          last_name: `${req.body.last_name}`,
+          phone: `${req.body.phone}`,
+          user_image: `${req.body.user_image}`,
+        },
+        function (err, res) {}
+      );
 
-  User.updateOne(
-    { user_id: `${req.body.user_id}` },
-    {
-      first_name: `${req.body.first_name}`,
-      last_name: `${req.body.last_name}`,
-      phone: `${req.body.phone}`,
-      user_image: `${req.body.user_image}`,
-    },
-    function (err, res) {}
-  );
+      Property.updateMany(
+        { user_id: `${req.body.user_id}` },
+        {
+          first_name: `${req.body.first_name}`,
+          last_name: `${req.body.last_name}`,
+          phone: `${req.body.phone}`,
+          user_image: `${req.body.user_image}`,
+        },
+        function (err, res) {}
+      );
 
-  return res.send("обновлено");
+      return res.send("обновлено");
+    }
+  });
 });
 
 users.post("/register", (req, res) => {
@@ -126,9 +141,10 @@ users.post("/login", (req, res) => {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          updateTokens(user.user_id).then((tokens) =>
-            res.json({ tokens, error: null })
-          );
+          updateTokens(user.user_id).then((tokens) => {
+            console.log(tokens);
+            res.json({ tokens, error: null });
+          });
         } else {
           res.json({ error: "Логин или пароль неверен" });
         }

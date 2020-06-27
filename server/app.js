@@ -94,8 +94,15 @@ app.post("/upload-property", upload.array("files[]", 10), (req, res) => {
 
   return res.send("lol");
 });
-
 app.get("/getProperty", (req, res) => {
+  Property.find({propertyId:req.query.propertyId}).then((resdata)=>{
+    if(resdata){
+      return res.send(resdata);
+    }
+  })
+})
+
+app.get("/getPropertys", (req, res) => {
   if (req.query.propertyType == "Прочее") {
     Property.find({
       typeProperty: {

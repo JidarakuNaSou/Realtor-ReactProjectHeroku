@@ -21,9 +21,6 @@ class Profile extends React.Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  componentDidMount = () => {
-    this.setState({ last_name: this.props.last_name });
-  };
   handleChangeStatus = (e) => {
     if (this.state.status === "Просмотр")
       this.setState({

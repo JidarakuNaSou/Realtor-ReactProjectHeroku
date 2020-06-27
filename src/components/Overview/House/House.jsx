@@ -183,7 +183,7 @@ class House extends React.Component {
                                           : " Не указано"}
                                       </div>
                                       <div className="col-3">
-                                        <img src={filterlist.img_url} alt="" />
+                                        <img src={filterlist.user_image} alt="" />
                                       </div>
                                     </div>
                                   </div>

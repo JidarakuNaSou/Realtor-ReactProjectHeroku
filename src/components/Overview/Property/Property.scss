@@ -31,10 +31,18 @@ textarea {
   .countapart {
     color: #243762;
     font-size: 30px;
+    margin-left: 20px;
+    h6{
+      margin-bottom: 0;
+    }
   }
   .space {
     color: #243762;
     font-size: 30px;
+    margin-left: 20px;
+  }
+  .price{
+    margin-left: 0px;
   }
   .user_info {
     color: #243762;
@@ -43,6 +51,9 @@ textarea {
   }
   h6 {
     font-size: 20px;
+  }
+  h3{
+    color: #af9cda;
   }
   h1 {
     color: #af9cda;

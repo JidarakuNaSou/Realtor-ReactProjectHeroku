@@ -1,14 +1,42 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { getProperty } from "../../UserFunction/UserFunction";
 
 class Property extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      property: this.props.property,
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.property) {
+      this.setState({ property: this.props.property });
+      console.log(this.state);
+      window.history.replaceState(
+        null,
+        null,
+        `/Property/getProperty?propertyId=${this.state.property.propertyId}`
+      );
+    } else {
+      const propertyId = new URLSearchParams(this.props.location.search).get(
+        "propertyId"
+      );
+      getProperty(propertyId).then((res) => {
+        this.setState({ property: res[0] });
+      });
+    }
+  }
+
   render() {
-    return (
+    return this.state.property ? (
       <section className="Property">
         <div className="col ml-3 mt-5 d-flex justify-content-between title-street">
           <h1>
-            {`${this.props.property.Street} ${this.props.property.House}`}{" "}
-            {this.props.property.Apartaments != ""
-              ? `, кв ${this.props.property.Apartaments}`
+            {`${this.state.property.Street} ${this.state.property.House}`}
+            {this.state.property.Apartaments != ""
+              ? `, кв ${this.state.property.Apartaments}`
               : null}
           </h1>
         </div>
@@ -17,48 +45,62 @@ class Property extends React.Component {
           <div className="row shadow infoproperty m-4">
             <div className="col-7">
               <div className="row description">
-                {this.props.property.Title
-                  ? this.props.property.Title
-                  : "Нет описания"}
+                {this.state.property.Title ? (
+                  this.state.property.Title
+                ) : (
+                  <h3>Нет описания</h3>
+                )}
               </div>
               <div className="row">
                 <div className="col-4 user">
                   <div className="col-3 d-flex align-items-center">
-                    <img src={this.props.property.user_image} alt="" />
+                    {this.state.property.user_image ===
+                    "img/load_user_avatar.png" ? (
+                      <img src={`../${this.state.property.user_image}`} alt="" />
+                    ) : <img src={this.state.property.user_image} alt="" />}
                   </div>
                   <div className="col-9 ml-3 d-flex align-items-center">
                     <div className="row">
-                      <div className="col-12 user_info"><h6>{`${this.props.property.first_name} ${this.props.property.last_name}`}</h6></div>
-                      <div className="col-12 user_info"><h6>{this.props.property.phone}</h6></div>
+                      <div className="col-12 user_info">
+                        <h6>{`${this.state.property.first_name} ${this.state.property.last_name}`}</h6>
+                      </div>
+                      <div className="col-12 user_info">
+                        <h6>{this.state.property.phone}</h6>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-1 d-flex d-flex align-items-center ">
+                <div className="col-1 d-flex d-flex align-items-center countapart">
                   <div className="col-12">
                     <div className="d-flex justify-content-center countapart">
-                      {this.props.property.countApartment === "" ||
-                      this.props.property.countApartment === "undefined"
-                        ? ""
-                        : this.props.property.countApartment}
+                      {this.state.property.countApartment === "" ||
+                      this.state.property.countApartment === "undefined" ? (
+                        ""
+                      ) : this.state.property.countApartment === "Студия" ? (
+                        this.state.property.countApartment
+                      ) : (
+                        <>
+                          <div className="col-12 d-flex align-items-center">{`${this.state.property.countApartment} `}</div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="col-3 d-flex align-items-center ">
+                <div className="col-3 d-flex align-items-center space">
                   <div className="col-12">
-                    <div className="d-flex justify-content-center space">
-                      {this.props.property.Space === ""
+                    <div className="d-flex justify-content-center ">
+                      {this.state.property.Space === ""
                         ? ""
-                        : `${this.props.property.Space}м/кв`}
+                        : `${this.state.property.Space}м/кв`}
                     </div>
                   </div>
                 </div>
-                <div className="col-3 d-flex d-flex align-items-center ">
+                <div className="col-3 d-flex d-flex align-items-center price">
                   <div className="col-12">
-                    
-                    <h1 className="d-flex justify-content-center">
-                      {this.props.property.Place === ""
+                    <h1 className="d-flex justify-content-center ">
+                      {this.state.property.Place === ""
                         ? ""
-                        : `${this.props.property.Place}₽`}
+                        : `${this.state.property.Place}₽`}
                     </h1>
                   </div>
                 </div>
@@ -72,7 +114,7 @@ class Property extends React.Component {
                   data-ride="carousel"
                 >
                   <div class="carousel-inner d-flex align-items-center">
-                    {this.props.property.uploadedFile.map(
+                    {this.state.property.uploadedFile.map(
                       (uploadedFile, index) => {
                         return index == 0 ? (
                           <div class="carousel-item active">
@@ -108,7 +150,7 @@ class Property extends React.Component {
                   </div>
                 </div>
                 <ol class="carousel-indicators">
-                  {this.props.property.uploadedFile.map(
+                  {this.state.property.uploadedFile.map(
                     (uploadedFile, index) => {
                       return index === 0 ? (
                         <li
@@ -156,41 +198,45 @@ class Property extends React.Component {
           <div className="row  media m-4">
             <div className="col-4 model3D shadow">
               <div class="sketchfab-embed-wrapper ">
-                <iframe
-                  title="A 3D model"
-                  width="200"
-                  height="200"
-                  src={
-                    this.props.property.sketch3D === "null"
-                      ? null
-                      : this.props.property.sketch3D
-                  }
-                  frameborder="0"
-                  allow="autoplay; fullscreen; vr"
-                  mozallowfullscreen="true"
-                  webkitallowfullscreen="true"
-                ></iframe>
+                {this.state.property.sketch3D === "" ||
+                this.state.property.sketch3D === "null" ||
+                this.state.property.sketch3D === null ? (
+                  <h3>3D модель не загружена</h3>
+                ) : (
+                  <iframe
+                    title="A 3D model"
+                    width="200"
+                    height="200"
+                    src={this.state.property.sketch3D}
+                    frameborder="0"
+                    allow="autoplay; fullscreen; vr"
+                    mozallowfullscreen="true"
+                    webkitallowfullscreen="true"
+                  ></iframe>
+                )}
               </div>
             </div>
             <div className="col-1"></div>
-            <div className="col-7 video shadow">
-              <iframe
-                width="560"
-                height="250"
-                src={
-                  this.props.property.video === "null"
-                    ? null
-                    : this.props.property.video
-                }
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="true"
-              ></iframe>
+            <div className="col-7 video shadow d-flex justify-content-center align-items-center">
+              {this.state.property.video === "" ||
+              this.state.property.video === "null" ||
+              this.state.property.video === null ? (
+                <h3>Видео не загружено</h3>
+              ) : (
+                <iframe
+                  width="560"
+                  height="250"
+                  src={this.state.property.video}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen="true"
+                ></iframe>
+              )}
             </div>
           </div>
         </div>
       </section>
-    );
+    ) : null;
   }
 }
-export default Property;
+export default withRouter(Property);
