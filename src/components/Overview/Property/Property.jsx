@@ -23,7 +23,7 @@ class Property extends React.Component {
               </div>
               <div className="row">
                 <div className="col-4 user">
-                  <div className="col-3">
+                  <div className="col-3 d-flex align-items-center">
                     <img src={this.props.property.user_image} alt="" />
                   </div>
                   <div className="col-9 ml-3 d-flex align-items-center">

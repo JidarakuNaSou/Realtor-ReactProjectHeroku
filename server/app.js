@@ -4,7 +4,6 @@ const aws = require("aws-sdk");
 const uuid = require("uuid/v4");
 const multerS3 = require("multer-s3");
 const Property = require("./models/Property");
-const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 4000;
 const bodyParser = require("body-parser");
