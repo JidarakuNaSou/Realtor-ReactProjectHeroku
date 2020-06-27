@@ -137,7 +137,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/../public"));
 
   app.get("/*", function root(req, res) {
-    res.sendFile(__dirname + "/../build" + '/index.html');
+    res.sendFile(path.resolve(__dirname + "/../build" + '/index.html'));
   });
 }
 
