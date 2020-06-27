@@ -41,6 +41,7 @@ export async function uploadProperty(formData) {
 export async function getPropertys(typeProperty) {
   return axios.get(`/getProperty?propertyType=${typeProperty}`).then((res) => {
     if (res.data !== undefined) {
+      console.log(`/getProperty?propertyType=${typeProperty}`);
       return res.data;
     }
   });
