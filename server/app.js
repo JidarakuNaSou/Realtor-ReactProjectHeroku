@@ -5,6 +5,7 @@ const uuid = require("uuid/v4");
 const multerS3 = require("multer-s3");
 const Property = require("./models/Property");
 const app = express();
+const path = require ('path');
 const PORT = process.env.PORT || 4000;
 const bodyParser = require("body-parser");
 
@@ -133,9 +134,9 @@ app.get("/getProperty", (req, res) => {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
+  app.get ('*', function (req, res) { 
+    res.sendFile (path.join (__dirname, 'build', 'index.html')) ; 
+  }); 
 }
 
 app.listen(PORT, () => {
