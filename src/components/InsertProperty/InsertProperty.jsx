@@ -152,12 +152,10 @@ export default function InsertProperty(props) {
     setSketch3D("");
   };
   const deletePhoto = (photo) => {
-    console.log("я тут")
-    console.log(uploadedFile)
     const updateFiles = uploadedFile;
     const pathfiles = pathFile;
     for (var i = pathfiles.length - 1; i >= 0; i--) {
-      if (pathfiles[i] == photo) {
+      if (pathfiles[i] === photo) {
         pathfiles.splice(i, 1);
         updateFiles.splice(i, 1);
       }
@@ -170,7 +168,7 @@ export default function InsertProperty(props) {
       setUploadedFile(undefined);
     } else {
       setPathFile(pathfiles);
-      setUploadedFile(updateFiles);
+      setUploadedFile(updateFiles);   
     }
   };
 
@@ -439,6 +437,7 @@ export default function InsertProperty(props) {
                 id=""
                 cols="70"
                 rows="15"
+                maxlength="800"
                 ref={register}
               ></textarea>
             </div>
@@ -457,7 +456,7 @@ export default function InsertProperty(props) {
                     <div className="col-12 mainphoto d-flex justify-content-center align-items-center">
                       <input {...getInputProps()} />
                       <div className="upmessage">
-                        Нажмите, что бы загрузить фотографии
+                        Нажмите, чтобы загрузить фотографии
                       </div>
                       <button type="button" className=""></button>
                     </div>
@@ -626,7 +625,11 @@ export default function InsertProperty(props) {
         <div className="row Insertform">
           <div className="col-4 shadow upl3dmodel d-flex justify-content-center align-items-center">
             {props.showModal3D == false && sketch3D == "" ? (
-              <button type="button" onClick={handleShow3D} className="header__btn m3dbtn">
+              <button
+                type="button"
+                onClick={handleShow3D}
+                className="header__btn m3dbtn"
+              >
                 Загрузить 3D Модель
               </button>
             ) : (
@@ -702,7 +705,9 @@ export default function InsertProperty(props) {
                 placeholder="Введите ссылку на 3D модель"
                 ref={register}
               />
-              <button tupe="button" onClick={handleSave3D}>Сохранить</button>
+              <button tupe="button" onClick={handleSave3D}>
+                Сохранить
+              </button>
             </div>
           </div>
         </div>
@@ -726,7 +731,9 @@ export default function InsertProperty(props) {
                 placeholder="Введите ссылку на видео"
                 ref={register}
               />
-              <button type="button" onClick={handleSaveVideo}>Сохранить</button>
+              <button type="button" onClick={handleSaveVideo}>
+                Сохранить
+              </button>
             </div>
           </div>
         </div>
