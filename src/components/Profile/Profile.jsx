@@ -102,6 +102,8 @@ class Profile extends React.Component {
       const user_id = new URLSearchParams(this.props.location.search).get(
         "user_id"
       );
+
+
       getUserOwerview(user_id).then((res) => {
         this.setState({
           last_name: res.last_name,
@@ -109,6 +111,7 @@ class Profile extends React.Component {
           phone: res.phone,
           user_image: res.user_image,
         });
+        this.props.setUserOwerview(user_id)
       });
       getUserPropertys(user_id).then((res) => {
         const salePropertys = [];

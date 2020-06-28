@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import {
-  setUserData,setProperty
+  setUserData,setProperty,setUserOwerview
 } from "../../store/SingUserToggler/actions";
 
 class ProfileContainer extends React.Component {
@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component {
         user_id = {this.props.user_id}
         setUserData={this.props.setUserData}
         setProperty={this.props.setProperty}
+        setUserOwerview={this.props.setUserOwerview}
       />
     );
   }
@@ -37,6 +38,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   setUserData,
   setProperty,
+  setUserOwerview,
 };
 
 export default connect(
