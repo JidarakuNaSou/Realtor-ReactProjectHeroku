@@ -152,6 +152,8 @@ export default function InsertProperty(props) {
     setSketch3D("");
   };
   const deletePhoto = (photo) => {
+    console.log("я тут")
+    console.log(uploadedFile)
     const updateFiles = uploadedFile;
     const pathfiles = pathFile;
     for (var i = pathfiles.length - 1; i >= 0; i--) {
@@ -444,9 +446,9 @@ export default function InsertProperty(props) {
 
           {!pathFile ? (
             <Dropzone
-              maxFiles="4"
+              maxFiles="10"
               onDrop={handleOnDrop}
-              maxSize="100000"
+              maxSize="100000000"
               accept=".jpg,.png,.jpeg"
             >
               {({ getRootProps, getInputProps }) => (
@@ -508,9 +510,9 @@ export default function InsertProperty(props) {
                                   </div>
                                 ) : (
                                   <Dropzone
-                                    maxFiles="4"
+                                    maxFiles="10"
                                     onDrop={handleOnDrop}
-                                    maxSize="100000"
+                                    maxSize="100000000"
                                     accept=".jpg,.png,.jpeg"
                                   >
                                     {({ getRootProps, getInputProps }) => (
