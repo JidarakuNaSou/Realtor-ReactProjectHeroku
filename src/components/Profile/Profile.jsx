@@ -217,13 +217,13 @@ class Profile extends React.Component {
                     <img
                       className="avatar"
                       src={
-                        this.state.user_image === "img/load_user_avatar.png" ||
-                        this.props.user_image === "img/load_user_avatar.png"
+                        this.state.user_image === "/img/load_user_avatar.png" ||
+                        this.props.user_image === "/img/load_user_avatar.png"
                           ? this.state.user_image
-                            ? this.state.user_image
-                            : this.props.user_image
-                          : this.state.user_image ? `../${this.state.user_image}`
-                          : `../${this.props.user_image}`
+                            ? `../${this.state.user_image}`
+                            : `../${this.props.user_image}`
+                          : this.state.user_image ? `${this.state.user_image}`
+                          : `${this.props.user_image}`
                       }
                       alt=""
                     />

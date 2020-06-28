@@ -41,9 +41,8 @@ app.use("/refresh-tokens", Users.refreshToken);
 
 aws.config.update({
   secretAccessKey:
-    process.env.AWS_SECRET_ACCESS_KEY ||
-    "3s9SdIPgXWUvTu6uYTiUcHFi6nFPp9CeWRkJtFaC",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "AKIAIEQXDQHU5PK6S3VA",
+    process.env.AWS_SECRET_ACCESS_KEY ,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID ,
   region: "eu-north-1",
 });
 
