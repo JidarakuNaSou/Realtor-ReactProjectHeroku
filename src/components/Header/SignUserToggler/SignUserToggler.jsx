@@ -36,12 +36,12 @@ export default function SignUserToggler(props) {
 
   const putuserdata = () => {
     const loginmethod = sessionStorage.getItem("loginmethod");
-    console.log(loginmethod);
+    
     if (loginmethod === "Local") {
       let user = userdata();
       user.then((res) => {
         if (res) {
-          console.log(res);
+          
           props.setUserData(
             res.last_name,
             res.first_name,

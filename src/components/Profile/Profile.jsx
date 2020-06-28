@@ -34,7 +34,7 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.user_id !== this.props.user_id) {
       this.setState({ user_id: this.props.user_id });
-      console.log(this.props.user_id);
+    
       window.history.replaceState(
         null,
         null,
@@ -220,8 +220,8 @@ class Profile extends React.Component {
                     <img
                       className="avatar"
                       src={
-                        this.state.user_image === "/img/load_user_avatar.png" ||
-                        this.props.user_image === "/img/load_user_avatar.png"
+                        this.state.user_image === "../img/load_user_avatar.png" ||
+                        this.props.user_image === "../img/load_user_avatar.png"
                           ? this.state.user_image
                             ? `../${this.state.user_image}`
                             : `../${this.props.user_image}`

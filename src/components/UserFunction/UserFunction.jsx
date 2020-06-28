@@ -79,16 +79,16 @@ export async function getPropertys(typeProperty) {
 }
 
 export async function login(user) {
-  console.log(user);
+  
   return axios
     .post("../users/login", {
       email: user.email,
       password: user.password,
     })
     .then((res) => {
-      console.log(res)
+      
       if (res.data.error === null) {
-        console.log(res.data.tokens.accessToken)
+     
         sessionStorage.setItem("accesstoken", res.data.tokens.accessToken);
         sessionStorage.setItem("refreshtoken", res.data.tokens.refreshToken);
         return res.data;
