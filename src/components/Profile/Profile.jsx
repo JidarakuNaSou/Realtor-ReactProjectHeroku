@@ -38,7 +38,7 @@ class Profile extends React.Component {
       window.history.replaceState(
         null,
         null,
-        `/Profile/getUserOwerview?user_id=${this.state.user_id}`
+        `/Profile/getUserOwerview?user_id=${this.props.user_id}`
       );
       getUserOwerview(this.props.user_id).then((res) => {
         this.setState({
@@ -67,13 +67,13 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.user_id) {
+    if (this.props.user_id!== undefined && this.props.user_id!== null) {
       this.setState({ user_id: this.props.user_id });
-      console.log(this.props.user_id);
+     console.log(`user_id : ${this.props.user_id}`)
       window.history.replaceState(
         null,
         null,
-        `/Profile/getUserOwerview?user_id=${this.state.user_id}`
+        `/Profile/getUserOwerview?user_id=${this.props.user_id}`
       );
       getUserOwerview(this.props.user_id).then((res) => {
         this.setState({
@@ -99,6 +99,7 @@ class Profile extends React.Component {
         });
       });
     } else {
+      console.log(`user_id : ${this.props.user_id}`)
       const user_id = new URLSearchParams(this.props.location.search).get(
         "user_id"
       );
@@ -202,7 +203,7 @@ class Profile extends React.Component {
               <h2>ПРОФИЛЬ</h2>
               {sessionStorage.getItem("accesstoken") &&
               jwt_decode(sessionStorage.getItem("accesstoken")).user_id ===
-                this.props.user_id ? (
+                this.props.user_id  ? (
                 <NavLink exact to="/InsertProperty">
                   <button className="header__btn  py-2 px-4 ml-5">
                     Загрузить недвижимость
@@ -220,8 +221,8 @@ class Profile extends React.Component {
                     <img
                       className="avatar"
                       src={
-                        this.state.user_image === "../img/load_user_avatar.png" ||
-                        this.props.user_image === "../img/load_user_avatar.png"
+                        this.state.user_image === "img/load_user_avatar.png" ||
+                        this.props.user_image === "img/load_user_avatar.png"
                           ? this.state.user_image
                             ? `../${this.state.user_image}`
                             : `../${this.props.user_image}`

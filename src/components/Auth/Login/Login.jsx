@@ -1,4 +1,5 @@
 import React from "react";
+import jwt_decode from "jwt-decode";
 import { login } from "../../UserFunction/UserFunction";
 
 class Login extends React.Component {
@@ -27,6 +28,7 @@ class Login extends React.Component {
         this.props.putuserdata();
         sessionStorage.setItem("loginmethod", "Local");
         this.props.handleClose();
+        this.props.setUserOwerview(jwt_decode(res.tokens.accessToken).user_id)
       } else {
         this.setState({ loginErrors: res.error });
       }

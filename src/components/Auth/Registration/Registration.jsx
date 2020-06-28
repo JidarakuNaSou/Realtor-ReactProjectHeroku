@@ -100,8 +100,6 @@ class Registration extends React.Component {
         user_image : "img/load_user_avatar.png"
       };
 
-      console.log(user);
-
       register(user).then(res => {
         if (res.error) {
           let formErrors = this.state.formErrors;
