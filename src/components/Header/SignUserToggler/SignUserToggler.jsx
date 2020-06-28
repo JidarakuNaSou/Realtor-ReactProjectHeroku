@@ -3,6 +3,8 @@ import Switch, { Case, Default } from "react-switch-case";
 import { userdata } from "../../UserFunction/UserFunction";
 import { NavLink } from "react-router-dom";
 import AuthHook from "./../../Auth/AuthHook";
+import jwt_decode from "jwt-decode";
+
 
 export default function SignUserToggler(props) {
   const [show, setShow] = useState(false);
@@ -22,6 +24,7 @@ export default function SignUserToggler(props) {
   const signinChange = () => {
     if (sessionStorage.getItem("loginmethod") === "Local") {
       props.setSignin("signin", false);
+      localStorage.removeItem("loginmethod");
       sessionStorage.clear();
     }
     if (localStorage.getItem("loginmethod") === "Google") {
@@ -61,6 +64,9 @@ export default function SignUserToggler(props) {
       putuserdata();
     }
   });
+  const setUser=()=>{
+    props.setUserOwerview(jwt_decode(sessionStorage.getItem("accesstoken")).user_id)
+  }
   return (
     <div className="header__signin col col-sm-2 d-flex justify-content-end">
       <Switch condition={props.signin_user}>
@@ -86,21 +92,31 @@ export default function SignUserToggler(props) {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <img
-                  className="user_avatar"
-                  src={`../${props.user_image}`}
-                  height="50"
-                  width="50"
-                  alt=""
-                />
+                {props.user_image !== "img/load_user_avatar.png" ? (
+                  <img
+                    className="user_avatar"
+                    src={`${props.user_image}`}
+                    height="50"
+                    width="50"
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    className="user_avatar"
+                    src={`../${props.user_image}`}
+                    height="50"
+                    width="50"
+                    alt=""
+                  />
+                )}
                 {props.first_name} {props.last_name[0]}
               </button>
               <div
                 class="dropdown-menu shadow dropdown-menu-center"
                 aria-labelledby="dropdownMenuButton"
               >
-                <NavLink exact to="/Profile">
-                  <button class="dropdown-item">ПРОФИЛЬ</button>
+                <NavLink to={`/Profile`}>
+                  <button onClick={()=>setUser()} class="dropdown-item">ПРОФИЛЬ</button>
                 </NavLink>
 
                 <NavLink exact to="/InsertProperty">

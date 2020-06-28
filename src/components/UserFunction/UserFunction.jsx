@@ -3,17 +3,31 @@ import jwt_decode from "jwt-decode";
 
 export async function register(newUser) {
   return axios
-    .post("..users/register", {
+    .post("../users/register", {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
       password: newUser.password,
       user_image: newUser.user_image,
+      phone:newUser.phone
     })
     .then((res) => {
       return res.data;
     });
 }
+export async function getUserOwerview(user_id) {
+  return axios
+    .get(`../users/findUserOwerview?user_id=${user_id}`)
+    .then((res) => {
+      if (res.data !== undefined) {
+        return res.data;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 export async function updateUserInfo(formData) {
   return axios
     .post("users/updateUserInfo", formData, {
@@ -42,6 +56,14 @@ export async function getProperty(propertyId) {
   return axios.get(`/getProperty?propertyId=${propertyId}`).then((res) => {
     if (res.data !== undefined) {
       console.log(`/getProperty?propertyId=${propertyId}`);
+      return res.data;
+    }
+  });
+}
+
+export async function getUserPropertys(user_id) {
+  return axios.get(`/getUserPropertys?user_id=${user_id}`).then((res) => {
+    if (res.data !== undefined) {
       return res.data;
     }
   });

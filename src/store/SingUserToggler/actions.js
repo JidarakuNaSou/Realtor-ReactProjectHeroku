@@ -4,11 +4,18 @@ export const PUT_USER_DATA = "PUT_USER_DATA"
 export const SET_SHOW_MODAL_3D = "SET_SHOW_MODAL_3D"
 export const SET_SHOW_MODAL_VIDEO = "SET_SHOW_MODAL_VIDEO"
 export const SET_PROPERTY = "SET_PROPERTY"
+export const SET_USER_OWERVIEW = "SET_USER_OWERVIEW"
 
 export const setUser = (signin_user) => ({
     type: SIGNIN_TO_USER_CHANGE,
     payload: {
         signin_user,
+    }
+})
+export const setUserOwerview = (user_id) => ({
+    type: SET_USER_OWERVIEW,
+    payload: {
+        user_id,
     }
 })
 

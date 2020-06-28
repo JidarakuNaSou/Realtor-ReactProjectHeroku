@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import {
-  setUserData,
+  setUserData,setProperty
 } from "../../store/SingUserToggler/actions";
 
 class ProfileContainer extends React.Component {
@@ -14,7 +14,9 @@ class ProfileContainer extends React.Component {
         user_image={this.props.user_image}
         signin_user={this.props.signin_user}
         phone = {this.props.phone}
+        user_id = {this.props.user_id}
         setUserData={this.props.setUserData}
+        setProperty={this.props.setProperty}
       />
     );
   }
@@ -27,11 +29,14 @@ const mapStateToProps = state => {
     user_image: state.signtouser.user_image,
     signin_user: state.signtouser.signin_user,
     phone : state.signtouser.phone,
+    user_id : state.signtouser.user_id,
+    
   };
 };
 
 const mapDispatchToProps = {
   setUserData,
+  setProperty,
 };
 
 export default connect(

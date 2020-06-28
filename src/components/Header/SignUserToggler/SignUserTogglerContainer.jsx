@@ -5,6 +5,7 @@ import {
   setSignin,
   setUser,
   setUserData,
+  setUserOwerview,
 } from "../../../store/SingUserToggler/actions";
 
 class SignUserTogglerContainer extends React.Component {
@@ -18,6 +19,8 @@ class SignUserTogglerContainer extends React.Component {
         last_name={this.props.last_name}
         first_name={this.props.first_name}
         user_image={this.props.user_image}
+        user_id = {this.props.user_id}
+        setUserOwerview={this.props.setUserOwerview}
       />
     );
   }
@@ -29,7 +32,7 @@ const mapStateToProps = state => {
     last_name: state.signtouser.last_name,
     first_name: state.signtouser.first_name,
     user_image: state.signtouser.user_image,
-    
+    user_id : state.signtouser.user_id,
   };
 };
 
@@ -37,6 +40,7 @@ const mapDispatchToProps = {
   setUser,
   setSignin,
   setUserData,
+  setUserOwerview,
 };
 
 export default connect(

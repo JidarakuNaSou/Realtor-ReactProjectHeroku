@@ -27,7 +27,7 @@ class App extends React.Component {
             <Route exact path="/Etc" component={EtcContainer} />
             <Route exact path="/House" component={HouseContainer} />
             <Route exact path="/Office" component={OfficeContainer} />
-            <Route exact path="/Profile" component={ProfileContainer} />
+            <Route path="/Profile" component={ProfileContainer} />
             <Route path="/Property" component={PropertyContainer} />
             <Route exact path="/InsertProperty" component={InsertPropertyContainer} />
             <Route exact path="/Yuridinfo" component={Yuridinfo} />

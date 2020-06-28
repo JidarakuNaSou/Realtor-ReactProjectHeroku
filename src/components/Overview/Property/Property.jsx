@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { getProperty } from "../../UserFunction/UserFunction";
 
 class Property extends React.Component {
@@ -28,17 +29,23 @@ class Property extends React.Component {
       });
     }
   }
+  selectuser = (user_id) => {
+    this.props.setUserOwerview(user_id);
+  };
 
   render() {
     return this.state.property ? (
       <section className="Property">
-        <div className="col ml-3 mt-5 d-flex justify-content-between title-street">
+        <div className="col px-0  mt-5 d-flex justify-content-between title-street">
           <h1>
             {`${this.state.property.Street} ${this.state.property.House}`}
             {this.state.property.Apartaments != ""
               ? `, кв ${this.state.property.Apartaments}`
               : null}
           </h1>
+          <button type="button" className="header__btn status_btn">
+            {this.state.property.status}
+          </button>
         </div>
 
         <div className="mt-3">
@@ -54,10 +61,25 @@ class Property extends React.Component {
               <div className="row">
                 <div className="col-4 user">
                   <div className="col-3 d-flex align-items-center">
-                    {this.state.property.user_image ===
-                    "img/load_user_avatar.png" ? (
-                      <img src={`../${this.state.property.user_image}`} alt="" />
-                    ) : <img src={this.state.property.user_image} alt="" />}
+                    <button
+                      onClick={() =>
+                        this.selectuser(this.state.property.user_id)
+                      }
+                    >
+                      <NavLink exact to="/Profile">
+                        <span data-descr="">
+                          {this.state.property.user_image ===
+                          "img/load_user_avatar.png" ? (
+                            <img
+                              src={`../${this.state.property.user_image}`}
+                              alt=""
+                            />
+                          ) : (
+                            <img src={this.state.property.user_image} alt="" />
+                          )}
+                        </span>
+                      </NavLink>
+                    </button>
                   </div>
                   <div className="col-9 ml-3 d-flex align-items-center">
                     <div className="row">

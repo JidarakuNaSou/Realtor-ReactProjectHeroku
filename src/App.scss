@@ -82,3 +82,18 @@ textarea {
   background: #dd4b39;
   color: #fff;
 }
+@media(max-width: 720px){
+  .container{
+  max-width: none;
+  }
+}
+@media(min-width: 768px){
+  .container{
+  max-width: none;
+  }
+}
+@media(max-width:576px){
+  .container{
+  max-width: none;
+  }
+}

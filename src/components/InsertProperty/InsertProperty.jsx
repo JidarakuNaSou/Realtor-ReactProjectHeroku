@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Dropzone from "react-dropzone";
 import { Modal } from "react-bootstrap";
@@ -96,7 +97,11 @@ export default function InsertProperty(props) {
     formData.append("typeProperty", typeProperty);
     formData.append("countApartment", countApartment);
     formData.append("House", data.House);
-    formData.append("Apartaments", data.Apartaments);
+    if (data.Apartaments) {
+      formData.append("Apartaments", data.Apartaments);
+    } else {
+      formData.append("Apartaments", "");
+    }
     formData.append("Place", data.Place);
     formData.append("Street", data.Street);
     formData.append("Space", data.Space);
@@ -117,16 +122,9 @@ export default function InsertProperty(props) {
     setTypeProperty(e.target.value);
   };
   const handleCountApartment = (e) => {
-    if (
-      e.target.value === undefined ||
-      e.target.value === "undefined" ||
-      e.target.value === "" ||
-      e.target.value === null ||
-      e.target.value === "null"
-    )
-      setCountApartment("");
+    if (e.target.value) setCountApartment(e.target.value);
     else {
-      setCountApartment(e.target.value);
+      setCountApartment("");
     }
   };
 
@@ -170,6 +168,13 @@ export default function InsertProperty(props) {
 
   return (
     <section className="content  ">
+      {localStorage.getItem("loginmethod") ? (
+        console.log("local")
+      ) : sessionStorage.getItem("loginmethod") ? (
+        console.log("session")
+      ) : (
+        <Redirect to="/" />
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row headerIP d-flex justify-content-between align-items-center ">
           <div title_ned>ЗАГРУЗИТЬ НЕДВИЖИМОСТЬ</div>

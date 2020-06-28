@@ -5,6 +5,7 @@ import {
   SET_SHOW_MODAL_3D,
   SET_SHOW_MODAL_VIDEO,
   SET_PROPERTY,
+  SET_USER_OWERVIEW,
 } from "./actions";
 
 const defaultState = {
@@ -16,6 +17,7 @@ const defaultState = {
   showModalVideo: false,
   phone: null,
   property: null,
+  user_id:null,
 };
 
 const signtouserReducer = (state = defaultState, action) => {
@@ -55,6 +57,11 @@ const signtouserReducer = (state = defaultState, action) => {
       return {
         ...state,
         property: action.payload.property,
+      };
+      case SET_USER_OWERVIEW:
+      return {
+        ...state,
+        user_id: action.payload.user_id,
       };
 
     default:

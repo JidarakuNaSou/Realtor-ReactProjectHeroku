@@ -29,6 +29,7 @@ class Registration extends React.Component {
       email: "",
       password: "",
       replace_password: "",
+      phone:"",
       formErrors: {
         first_name: "",
         last_name: "",
@@ -95,9 +96,11 @@ class Registration extends React.Component {
         email: this.state.email,
         password: this.state.password,
         replace_password: this.state.replace_password,
-        phone : null,
+        phone : this.state.phone,
         user_image : "img/load_user_avatar.png"
       };
+
+      console.log(user);
 
       register(user).then(res => {
         if (res.error) {
@@ -157,6 +160,18 @@ class Registration extends React.Component {
               {formErrors.last_name.length > 0 && (
                 <p className="errorMessage">{formErrors.last_name}</p>
               )}
+            </div>
+            <div>
+              <input
+                type="text"
+                id="phone_reg"
+                className="modal-body__item col-12"
+                name="phone"
+                value={this.state.phone}
+                noValidate
+                placeholder="НОМЕР ТЕЛ."
+                onChange={this.onChange}
+              />
             </div>
             <div>
               <input

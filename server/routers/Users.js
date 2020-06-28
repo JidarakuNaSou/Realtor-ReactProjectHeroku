@@ -27,6 +27,14 @@ const updateTokens = (user_id) => {
     }));
 };
 
+users.get("/findUserOwerview", (req, res) => {
+  User.findOne({ user_id: req.query.user_id }).then((user) => {
+    if (user) {
+      return res.json(user);
+    } else return console.log("there is no such user ");
+  });
+});
+
 users.get("/finduser", authmiddleware, (req, res) => {
   const authHeader = req.get("Authorization");
   const token = authHeader.replace("Bearer ", "");
@@ -62,22 +70,16 @@ const upload = multer({
   }),
 });
 
-users.post("/updateUserInfo", upload.array("files", 1), (req, res) => {
-  const update = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    phone: req.body.phone,
-    user_image: req.body.user_image,
-  };
+users.post("/updateUserInfo", upload.single("file"), (req, res) => {
   User.findOne({ user_id: req.body.user_id }).then((user) => {
     if (user) {
+      if(!req.file){
       User.updateOne(
         { user_id: `${req.body.user_id}` },
         {
           first_name: `${req.body.first_name}`,
           last_name: `${req.body.last_name}`,
           phone: `${req.body.phone}`,
-          user_image: `${req.body.user_image}`,
         },
         function (err, res) {}
       );
@@ -88,12 +90,35 @@ users.post("/updateUserInfo", upload.array("files", 1), (req, res) => {
           first_name: `${req.body.first_name}`,
           last_name: `${req.body.last_name}`,
           phone: `${req.body.phone}`,
-          user_image: `${req.body.user_image}`,
         },
         function (err, res) {}
       );
+      }
+      else{
+        User.updateOne(
+          { user_id: `${req.body.user_id}` },
+          {
+            first_name: `${req.body.first_name}`,
+            last_name: `${req.body.last_name}`,
+            phone: `${req.body.phone}`,
+            user_image: `${req.file.location}`,
+          },
+          function (err, res) {}
+        );
+  
+        Property.updateMany(
+          { user_id: `${req.body.user_id}` },
+          {
+            first_name: `${req.body.first_name}`,
+            last_name: `${req.body.last_name}`,
+            phone: `${req.body.phone}`,
+            user_image: `${req.file.location}`,
+          },
+          function (err, res) {}
+        );
+        return res.send(req.body);
+      }
 
-      return res.send("обновлено");
     }
   });
 });
@@ -106,10 +131,11 @@ users.post("/register", (req, res) => {
     last_name: req.body.last_name,
     email: req.body.email,
     password: req.body.password,
-    phone: null,
+    phone: req.body.phone,
     user_image: req.body.user_image,
     created: today,
   };
+  console.log(req.body)
   User.findOne({
     email: req.body.email,
   })

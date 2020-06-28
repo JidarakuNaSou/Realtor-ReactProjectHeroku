@@ -91,12 +91,20 @@ app.post("/upload-property", upload.array("files[]", 10), (req, res) => {
     created: today,
   };
   Property.create(propertyData);
-
   return res.send("lol");
 });
 app.get("/getProperty", (req, res) => {
   Property.find({propertyId:req.query.propertyId}).then((resdata)=>{
     if(resdata){
+      return res.send(resdata);
+    }
+  })
+})
+
+app.get("/getUserPropertys", (req, res) => {
+  Property.find({user_id:req.query.user_id}).then((resdata)=>{
+    if(resdata){
+      console.log(resdata)
       return res.send(resdata);
     }
   })
