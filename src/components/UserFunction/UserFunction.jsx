@@ -78,6 +78,16 @@ export async function getPropertys(typeProperty) {
   });
 }
 
+export async function propertyStatus(propertyStatus,propertyId) {
+  return axios.post(`../users/propertyStatus`,{propertyStatus,propertyId}).then((res) => {
+    if (res.data !== undefined) {
+      return res.data;
+    }
+  });
+}
+
+
+
 export async function login(user) {
   
   return axios

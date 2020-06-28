@@ -452,7 +452,7 @@ class Profile extends React.Component {
         <div className="row">
           <div className="container">
             <div className="client shadow">
-              <div className="col ml-4 pt-3">
+              <div className="row ml-4 pt-3">
                 <span>История продаж</span> <div className="col-12"></div>
                 {this.state.soldPropertys.length !== 0 ? (
                   this.state.soldPropertys.map((filterlist) => {

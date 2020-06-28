@@ -1,7 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { getProperty } from "../../UserFunction/UserFunction";
+import jwt_decode from "jwt-decode";
+import { getProperty,propertyStatus } from "../../UserFunction/UserFunction";
 
 class Property extends React.Component {
   constructor(props) {
@@ -9,13 +10,15 @@ class Property extends React.Component {
     this.state = {
       property: this.props.property,
       status: "Просмотр",
+      statusProperty: "",
     };
   }
 
   componentDidMount() {
     if (this.props.property) {
       this.setState({ property: this.props.property });
-      console.log(this.state);
+      this.setState({ statusProperty: this.props.property.status });
+
       window.history.replaceState(
         null,
         null,
@@ -27,11 +30,17 @@ class Property extends React.Component {
       );
       getProperty(propertyId).then((res) => {
         this.setState({ property: res[0] });
+        this.setState({ statusProperty: res[0].status });
       });
     }
   }
   selectuser = (user_id) => {
     this.props.setUserOwerview(user_id);
+  };
+
+  handleStatus = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    propertyStatus(e.target.value,this.state.property.propertyId)
   };
 
   render() {
@@ -44,9 +53,51 @@ class Property extends React.Component {
               ? `, кв ${this.state.property.Apartaments}`
               : null}
           </h1>
-          <button type="button" className="header__btn status_btn">
-            {this.state.property.status}
-          </button>
+          {sessionStorage.getItem("accesstoken") &&
+          jwt_decode(sessionStorage.getItem("accesstoken")).user_id ===
+            this.state.property.user_id ? (
+            <form>
+              <div class="btn-group dropleft statusdropdown">
+                <button
+                  type="button"
+                  class="dropdown-toggle header__btn"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.statusProperty}
+                </button>
+                <div class="dropdown-menu shadow">
+                  <div className="d-flex justify-content-center">
+                    <div class="form_radio_btn">
+                      <input
+                        id="radio-15"
+                        type="radio"
+                        name="statusProperty"
+                        onChange={this.handleStatus}
+                        value="Продано"
+                      />
+                      <label for="radio-15">Продано</label>
+                    </div>
+                    <div class="form_radio_btn">
+                      <input
+                        id="radio-16"
+                        type="radio"
+                        name="statusProperty"
+                        onChange={this.handleStatus}
+                        value="Продается"
+                      />
+                      <label for="radio-16">Продается</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          ) : (
+            <button type="button" className="header__btn status_btn">
+              {this.state.property.status}
+            </button>
+          )}
         </div>
 
         <div className="mt-3">
@@ -256,13 +307,6 @@ class Property extends React.Component {
                 ></iframe>
               )}
             </div>
-          </div>
-          <div className="row Insertform d-flex justify-content-center my-5">
-            <button type="button" className="header__btn ">
-              <NavLink exact to="/InsertProperty">
-                ИЗМЕНИТЬ
-              </NavLink>
-            </button>
           </div>
         </div>
       </section>

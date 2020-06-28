@@ -47,8 +47,7 @@ users.get("/finduser", authmiddleware, (req, res) => {
 });
 
 aws.config.update({
-  secretAccessKey:
-    process.env.AWS_SECRET_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   region: "eu-north-1",
 });
@@ -72,28 +71,27 @@ const upload = multer({
 users.post("/updateUserInfo", upload.single("file"), (req, res) => {
   User.findOne({ user_id: req.body.user_id }).then((user) => {
     if (user) {
-      if(!req.file){
-      User.updateOne(
-        { user_id: `${req.body.user_id}` },
-        {
-          first_name: `${req.body.first_name}`,
-          last_name: `${req.body.last_name}`,
-          phone: `${req.body.phone}`,
-        },
-        function (err, res) {}
-      );
+      if (!req.file) {
+        User.updateOne(
+          { user_id: `${req.body.user_id}` },
+          {
+            first_name: `${req.body.first_name}`,
+            last_name: `${req.body.last_name}`,
+            phone: `${req.body.phone}`,
+          },
+          function (err, res) {}
+        );
 
-      Property.updateMany(
-        { user_id: `${req.body.user_id}` },
-        {
-          first_name: `${req.body.first_name}`,
-          last_name: `${req.body.last_name}`,
-          phone: `${req.body.phone}`,
-        },
-        function (err, res) {}
-      );
-      }
-      else{
+        Property.updateMany(
+          { user_id: `${req.body.user_id}` },
+          {
+            first_name: `${req.body.first_name}`,
+            last_name: `${req.body.last_name}`,
+            phone: `${req.body.phone}`,
+          },
+          function (err, res) {}
+        );
+      } else {
         User.updateOne(
           { user_id: `${req.body.user_id}` },
           {
@@ -104,7 +102,7 @@ users.post("/updateUserInfo", upload.single("file"), (req, res) => {
           },
           function (err, res) {}
         );
-  
+
         Property.updateMany(
           { user_id: `${req.body.user_id}` },
           {
@@ -117,7 +115,6 @@ users.post("/updateUserInfo", upload.single("file"), (req, res) => {
         );
         return res.send(req.body);
       }
-
     }
   });
 });
@@ -134,7 +131,7 @@ users.post("/register", (req, res) => {
     user_image: req.body.user_image,
     created: today,
   };
-  console.log(req.body)
+  console.log(req.body);
   User.findOne({
     email: req.body.email,
   })
@@ -180,6 +177,19 @@ users.post("/login", (req, res) => {
     .catch((err) => {
       res.send("error: " + err);
     });
+});
+
+users.post("/propertyStatus", (req, res) => {
+  Property.updateOne(
+    {
+      propertyId: `${req.body.propertyId}`,
+    },
+    {
+      status: `${req.body.propertyStatus}`,
+    },
+    function (err, res) {}
+  );
+  return res.send(req.body);
 });
 
 const refreshToken = (req, res) => {

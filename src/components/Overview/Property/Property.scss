@@ -9,7 +9,6 @@
   }
 }
 
-
 textarea {
   margin-top: 50px;
   outline: none;
@@ -30,17 +29,29 @@ textarea {
   .caruselphoto {
     height: 400px;
   }
-  .status_btn{
+  .statusdropdown {
+    margin-right: 50px;
+    button {
+      margin: 0;
+      font-size: medium;
+      background-color: #af9cda;
+      color: white;
+      border-radius: 0;
+      padding: 4px 2px;
+      border-radius: 10px;
+    }
+  }
+  .status_btn {
     margin-right: 50px;
   }
-  .title-street{
+  .title-street {
     margin-left: 25px;
   }
   .countapart {
     color: #243762;
     font-size: 30px;
     margin-left: 20px;
-    h6{
+    h6 {
       margin-bottom: 0;
     }
   }
@@ -49,7 +60,7 @@ textarea {
     font-size: 30px;
     margin-left: 20px;
   }
-  .price{
+  .price {
     margin-left: 0px;
   }
   .user_info {
@@ -60,7 +71,7 @@ textarea {
   h6 {
     font-size: 20px;
   }
-  h3{
+  h3 {
     color: #af9cda;
   }
   h1 {
