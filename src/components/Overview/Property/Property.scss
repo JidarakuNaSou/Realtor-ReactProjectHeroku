@@ -8,9 +8,8 @@
     font-size: 18px;
   }
 }
-.caruselphoto {
-  height: 400px;
-}
+
+
 textarea {
   margin-top: 50px;
   outline: none;
@@ -28,6 +27,9 @@ textarea {
   border-color: #af9cda;
 }
 .Property {
+  .caruselphoto {
+    height: 400px;
+  }
   .status_btn{
     margin-right: 50px;
   }

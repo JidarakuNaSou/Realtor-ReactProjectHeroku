@@ -30,7 +30,7 @@ export async function getUserOwerview(user_id) {
 
 export async function updateUserInfo(formData) {
   return axios
-    .post("users/updateUserInfo", formData, {
+    .post("../users/updateUserInfo", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

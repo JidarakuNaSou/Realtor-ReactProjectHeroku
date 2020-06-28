@@ -8,6 +8,7 @@ class Property extends React.Component {
     super(props);
     this.state = {
       property: this.props.property,
+      status: "Просмотр",
     };
   }
 
@@ -255,6 +256,13 @@ class Property extends React.Component {
                 ></iframe>
               )}
             </div>
+          </div>
+          <div className="row Insertform d-flex justify-content-center my-5">
+            <button type="button" className="header__btn ">
+              <NavLink exact to="/InsertProperty">
+                ИЗМЕНИТЬ
+              </NavLink>
+            </button>
           </div>
         </div>
       </section>

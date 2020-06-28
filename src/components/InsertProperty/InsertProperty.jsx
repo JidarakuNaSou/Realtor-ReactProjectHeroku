@@ -145,6 +145,12 @@ export default function InsertProperty(props) {
   const handleMainPhoto = (photo) => {
     setMainPhoto(photo);
   };
+  const deletevideo = () => {
+    setVideo("");
+  };
+  const delete3d = () => {
+    setSketch3D("");
+  };
   const deletePhoto = (photo) => {
     const updateFiles = uploadedFile;
     const pathfiles = pathFile;
@@ -618,22 +624,29 @@ export default function InsertProperty(props) {
         <div className="row Insertform">
           <div className="col-4 shadow upl3dmodel d-flex justify-content-center align-items-center">
             {props.showModal3D == false && sketch3D == "" ? (
-              <button onClick={handleShow3D} className="header__btn m3dbtn">
+              <button type="button" onClick={handleShow3D} className="header__btn m3dbtn">
                 Загрузить 3D Модель
               </button>
             ) : (
-              <div class="sketchfab-embed-wrapper item_3D  d-flex justify-content-center align-items-center">
-                <iframe
-                  title="A 3D model"
-                  width="200"
-                  height="200"
-                  src={sketch3D}
-                  frameborder="0"
-                  allow="autoplay; fullscreen; vr"
-                  mozallowfullscreen="true"
-                  webkitallowfullscreen="true"
-                ></iframe>
-              </div>
+              <>
+                <button
+                  className="del3d"
+                  type="button"
+                  onClick={() => delete3d()}
+                ></button>
+                <div class="sketchfab-embed-wrapper item_3D  d-flex justify-content-center align-items-center">
+                  <iframe
+                    title="A 3D model"
+                    width="200"
+                    height="200"
+                    src={sketch3D}
+                    frameborder="0"
+                    allow="autoplay; fullscreen; vr"
+                    mozallowfullscreen="true"
+                    webkitallowfullscreen="true"
+                  ></iframe>
+                </div>
+              </>
             )}
           </div>
 
@@ -642,19 +655,27 @@ export default function InsertProperty(props) {
             {props.showModalVideo == false && video == "" ? (
               <button
                 onClick={handleShowVideo}
+                type="button"
                 className="header__btn videobtn"
               >
                 Загрузить Видео
               </button>
             ) : (
-              <iframe
-                width="560"
-                height="250"
-                src={video}
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="true"
-              ></iframe>
+              <>
+                <button
+                  className="delvideo"
+                  type="button"
+                  onClick={() => deletevideo()}
+                ></button>
+                <iframe
+                  width="560"
+                  height="250"
+                  src={video}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen="true"
+                ></iframe>
+              </>
             )}
           </div>
         </div>
@@ -679,7 +700,7 @@ export default function InsertProperty(props) {
                 placeholder="Введите ссылку на 3D модель"
                 ref={register}
               />
-              <button onClick={handleSave3D}>Сохранить</button>
+              <button tupe="button" onClick={handleSave3D}>Сохранить</button>
             </div>
           </div>
         </div>
@@ -703,7 +724,7 @@ export default function InsertProperty(props) {
                 placeholder="Введите ссылку на видео"
                 ref={register}
               />
-              <button onClick={handleSaveVideo}>Сохранить</button>
+              <button type="button" onClick={handleSaveVideo}>Сохранить</button>
             </div>
           </div>
         </div>

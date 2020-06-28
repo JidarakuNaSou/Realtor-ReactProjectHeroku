@@ -20,6 +20,7 @@
       margin-right: 0px;
       margin-bottom: 5px;
     }
+    
     .form_radio_btn:nth-child(2n) {
       margin-right: 0px;
     }
@@ -59,7 +60,6 @@
     height: 15%;
     width: 30%;
   }
-
   button {
     margin: 0;
     font-size: medium;
@@ -67,6 +67,32 @@
     color: white;
     border-radius: 0;
     padding: 4px 2px;
+  }
+  .delvideo{
+    position: relative;
+          display: flex;
+          margin: 0;
+          padding: 10px 10px;
+          left: 45%;
+          top: -50%;
+          background-color: rgba(0, 0, 0, 0);
+          background-image: url(/img/Group1.png);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+  }
+  .del3d{
+    position: relative;
+          display: flex;
+          margin: 0;
+          padding: 10px 10px;
+          left: 32.5%;
+          top: -50%;
+          background-color: rgba(0, 0, 0, 0);
+          background-image: url(/img/Group1.png);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
   }
   button:not(last-child) {
     margin-right: 6px;
@@ -199,6 +225,7 @@
     }
   }
 }
+
 .headerIP {
   margin: 25px 8% 25px 8%;
   color: #af9cda;
