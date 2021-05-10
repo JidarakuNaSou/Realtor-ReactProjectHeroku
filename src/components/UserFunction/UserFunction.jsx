@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 export async function register(newUser) {
   return axios
-    .post("../users/register", {
+    .post("http://localhost:4000/users/register", {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
@@ -17,9 +17,10 @@ export async function register(newUser) {
 }
 export async function getUserOwerview(user_id) {
   return axios
-    .get(`../users/findUserOwerview?user_id=${user_id}`)
+    .get(`http://localhost:4000/users/findUserOwerview?user_id=${user_id}`)
     .then((res) => {
       if (res.data !== undefined) {
+        console.log(res.data);
         return res.data;
       }
     })
@@ -30,7 +31,7 @@ export async function getUserOwerview(user_id) {
 
 export async function updateUserInfo(formData) {
   return axios
-    .post("../users/updateUserInfo", formData, {
+    .post("http://localhost:4000/users/updateUserInfo", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -42,7 +43,7 @@ export async function updateUserInfo(formData) {
 
 export async function uploadProperty(formData) {
   return axios
-    .post("/upload-property", formData, {
+    .post("http://localhost:4000/upload-property", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -53,7 +54,7 @@ export async function uploadProperty(formData) {
 }
 
 export async function getProperty(propertyId) {
-  return axios.get(`/getProperty?propertyId=${propertyId}`).then((res) => {
+  return axios.get(`http://localhost:4000/getProperty?propertyId=${propertyId}`).then((res) => {
     if (res.data !== undefined) {
       console.log(`/getProperty?propertyId=${propertyId}`);
       return res.data;
@@ -62,7 +63,7 @@ export async function getProperty(propertyId) {
 }
 
 export async function getUserPropertys(user_id) {
-  return axios.get(`/getUserPropertys?user_id=${user_id}`).then((res) => {
+  return axios.get(`http://localhost:4000/getUserPropertys?user_id=${user_id}`).then((res) => {
     if (res.data !== undefined) {
       return res.data;
     }
@@ -70,7 +71,7 @@ export async function getUserPropertys(user_id) {
 }
 
 export async function getPropertys(typeProperty) {
-  return axios.get(`/getPropertys?propertyType=${typeProperty}`).then((res) => {
+  return axios.get(`http://localhost:4000/getPropertys?propertyType=${typeProperty}`).then((res) => {
     if (res.data !== undefined) {
       console.log(`/getPropertys?propertyType=${typeProperty}`);
       return res.data;
@@ -79,7 +80,7 @@ export async function getPropertys(typeProperty) {
 }
 
 export async function propertyStatus(propertyStatus,propertyId) {
-  return axios.post(`../users/propertyStatus`,{propertyStatus,propertyId}).then((res) => {
+  return axios.post(`http://localhost:4000/users/propertyStatus`,{propertyStatus,propertyId}).then((res) => {
     if (res.data !== undefined) {
       return res.data;
     }
@@ -91,7 +92,7 @@ export async function propertyStatus(propertyStatus,propertyId) {
 export async function login(user) {
   
   return axios
-    .post("../users/login", {
+    .post("http://localhost:4000/users/login", {
       email: user.email,
       password: user.password,
     })
@@ -118,7 +119,7 @@ export async function userdata() {
   const accessToken = sessionStorage.getItem("accesstoken");
   const AuthStr = "Bearer ".concat(accessToken);
   return axios
-    .get("../users/finduser", { headers: { Authorization: AuthStr } })
+    .get("http://localhost:4000/users/finduser", { headers: { Authorization: AuthStr } })
     .then((res) => {
       if (res.data !== undefined) {
         return res.data;
@@ -131,7 +132,7 @@ export async function userdata() {
 
 export const GetTokens = async (refreshToken) => {
   await axios
-    .post("/refresh-tokens", { refreshToken })
+    .post("http://localhost:4000/refresh-tokens", { refreshToken })
     .then((res) => {
       if (res.data !== undefined) {
         sessionStorage.removeItem("accesstoken");
