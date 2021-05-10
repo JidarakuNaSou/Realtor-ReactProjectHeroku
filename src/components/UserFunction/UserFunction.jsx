@@ -117,7 +117,7 @@ export async function userdata() {
   const accessToken = sessionStorage.getItem("accesstoken");
   const AuthStr = "Bearer ".concat(accessToken);
   return axios
-    .get("http://localhost:4000/users/finduser", { headers: { Authorization: AuthStr } })
+    .get("https://realtor3d.herokuapp.com/users/finduser", { headers: { Authorization: AuthStr } })
     .then((res) => {
       if (res.data !== undefined) {
         return res.data;
