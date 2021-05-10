@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 export async function register(newUser) {
   return axios
-    .post("http://localhost:4000/users/register", {
+    .post("https://realtor3d.herokuapp.com/users/register", {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
@@ -17,7 +17,7 @@ export async function register(newUser) {
 }
 export async function getUserOwerview(user_id) {
   return axios
-    .get(`http://localhost:4000/users/findUserOwerview?user_id=${user_id}`)
+    .get(`https://realtor3d.herokuapp.com/users/findUserOwerview?user_id=${user_id}`)
     .then((res) => {
       if (res.data !== undefined) {
         console.log(res.data);
@@ -31,7 +31,7 @@ export async function getUserOwerview(user_id) {
 
 export async function updateUserInfo(formData) {
   return axios
-    .post("http://localhost:4000/users/updateUserInfo", formData, {
+    .post("https://realtor3d.herokuapp.com/users/updateUserInfo", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -43,7 +43,7 @@ export async function updateUserInfo(formData) {
 
 export async function uploadProperty(formData) {
   return axios
-    .post("http://localhost:4000/upload-property", formData, {
+    .post("https://realtor3d.herokuapp.com/upload-property", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -54,16 +54,15 @@ export async function uploadProperty(formData) {
 }
 
 export async function getProperty(propertyId) {
-  return axios.get(`http://localhost:4000/getProperty?propertyId=${propertyId}`).then((res) => {
+  return axios.get(`https://realtor3d.herokuapp.com/getProperty?propertyId=${propertyId}`).then((res) => {
     if (res.data !== undefined) {
-      console.log(`/getProperty?propertyId=${propertyId}`);
       return res.data;
     }
   });
 }
 
 export async function getUserPropertys(user_id) {
-  return axios.get(`http://localhost:4000/getUserPropertys?user_id=${user_id}`).then((res) => {
+  return axios.get(`https://realtor3d.herokuapp.com/getUserPropertys?user_id=${user_id}`).then((res) => {
     if (res.data !== undefined) {
       return res.data;
     }
@@ -71,16 +70,15 @@ export async function getUserPropertys(user_id) {
 }
 
 export async function getPropertys(typeProperty) {
-  return axios.get(`http://localhost:4000/getPropertys?propertyType=${typeProperty}`).then((res) => {
+  return axios.get(`https://realtor3d.herokuapp.com/getPropertys?propertyType=${typeProperty}`).then((res) => {
     if (res.data !== undefined) {
-      console.log(`/getPropertys?propertyType=${typeProperty}`);
       return res.data;
     }
   });
 }
 
 export async function propertyStatus(propertyStatus,propertyId) {
-  return axios.post(`http://localhost:4000/users/propertyStatus`,{propertyStatus,propertyId}).then((res) => {
+  return axios.post(`https://realtor3d.herokuapp.com/users/propertyStatus`,{propertyStatus,propertyId}).then((res) => {
     if (res.data !== undefined) {
       return res.data;
     }
@@ -92,7 +90,7 @@ export async function propertyStatus(propertyStatus,propertyId) {
 export async function login(user) {
   
   return axios
-    .post("http://localhost:4000/users/login", {
+    .post("https://realtor3d.herokuapp.com/users/login", {
       email: user.email,
       password: user.password,
     })
@@ -132,7 +130,7 @@ export async function userdata() {
 
 export const GetTokens = async (refreshToken) => {
   await axios
-    .post("http://localhost:4000/refresh-tokens", { refreshToken })
+    .post("https://realtor3d.herokuapp.com/refresh-tokens", { refreshToken })
     .then((res) => {
       if (res.data !== undefined) {
         sessionStorage.removeItem("accesstoken");

@@ -431,7 +431,7 @@ class Profile extends React.Component {
                                         : " Не указано"}
                                     </div>
                                     <div className="col-3">
-                                      <img src={filterlist.user_image} alt="" />
+                                      <img src={`../${filterlist.user_image}`} alt="" />
                                     </div>
                                   </div>
                                 </div>
@@ -531,7 +531,7 @@ class Profile extends React.Component {
                                         : " Не указано"}
                                     </div>
                                     <div className="col-3">
-                                      <img src={filterlist.user_image} alt="" />
+                                      <img src={`../${filterlist.user_image}`} alt="" />
                                     </div>
                                   </div>
                                 </div>
