@@ -47,7 +47,7 @@ users.get("/finduser", authmiddleware, (req, res) => {
 });
 
 aws.config.update({
-  secretAccessKey: `"${process.env.AWS_SECRET_ACCESS_KEY}"`,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   region: "eu-central-1",
 });
